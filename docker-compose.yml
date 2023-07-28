@@ -1,0 +1,57 @@
+version: '3'
+
+services:
+  postgresdb:
+    container_name: postgres
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: greenhome
+      POSTGRES_PASSWORD: 
+      POSTGRES_DB: greenhomedb
+      PGDATA: /data/postgres
+    volumes:
+      - postgresdb:/data/postgres
+    ports:
+      - 5332:5432
+    restart: unless-stopped
+    
+  api:
+    container_name: greenhomeapi
+    image: greenhomeapi-img
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    depends_on:
+      - postgresdb
+    environment:
+      SERVER_PORT: 8080
+      DATASOURCE_URL: jdbc:postgresql://postgresdb:5432/greenhomedb
+      DATASOURCE_USER: greenhome
+      DATASOURCE_PASSWORD: 
+      MAIL_USER_NAME: phvrossato@gmail.com
+      MAIL_USER_PASSWORD: 
+      MAIL_DEBUG: false
+      SECRET_KEY: 
+      HOURS_TO_JWT_EXPIRES: 24
+    ports:
+      - 8080:8080
+    restart: always
+
+  react:
+    container_name: greenhomereact
+    image: greenhomereact-img
+    build: 
+      context: ./react
+      dockerfile: Dockerfile
+    depends_on:
+      - api
+    ports:
+      - 3000:3000
+    restart: unless-stopped
+
+networks:
+  db:
+    driver: bridge
+
+volumes:
+    postgresdb:
