@@ -1,18 +1,11 @@
 package com.greenhome.api.controller.auth;
 
-import com.greenhome.api.dto.authentication.AuthenticationRequest;
-import com.greenhome.api.dto.authentication.AuthenticationResponse;
-import com.greenhome.api.dto.authentication.RegisterRequest;
+import com.greenhome.api.dto.authentication.*;
 import com.greenhome.api.service.auth.AuthService;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import java.util.logging.Logger;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RequestMapping("api/v1/auth")
 public class AuthController {
     
@@ -22,17 +15,24 @@ public class AuthController {
         this.authService = authService;
     }
 
+    @PostMapping("/validateToken")
+    public TokenValidationResponse register(
+            @RequestBody TokenValidationRequest registerRequest
+    ) {
+        return authService.validate(registerRequest.token);
+    }
+    
     @PostMapping("/register")
-    public ResponseEntity<AuthenticationResponse> register(
+    public AuthenticationResponse register(
             @RequestBody RegisterRequest registerRequest
     ) {
-        return ResponseEntity.ok(authService.register(registerRequest));
+        return authService.register(registerRequest);
     }
 
     @PostMapping("/authenticate")
-    public ResponseEntity<AuthenticationResponse> authenticate(
+    public AuthenticationResponse authenticate(
             @RequestBody AuthenticationRequest authenticationRequest
     ) {
-        return ResponseEntity.ok(authService.authenticate(authenticationRequest));
+        return authService.authenticate(authenticationRequest);
     }
 }

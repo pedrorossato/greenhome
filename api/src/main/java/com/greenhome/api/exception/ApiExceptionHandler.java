@@ -2,6 +2,7 @@ package com.greenhome.api.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
@@ -27,6 +28,15 @@ public class ApiExceptionHandler {
         ApiException message = ApiException.builder()
                 .httpStatus(HttpStatus.NOT_FOUND)
                 .message(e.getMessage())
+                .build();
+        return new ResponseEntity<>(message, message.getHttpStatus());
+    }
+
+    @ExceptionHandler(BadCredentialsException.class)
+    public ResponseEntity<ApiException> handleBadCredentialsException(BadCredentialsException e) {
+        ApiException message = ApiException.builder()
+                .httpStatus(HttpStatus.UNAUTHORIZED)
+                .message("Credenciais inválidas.")
                 .build();
         return new ResponseEntity<>(message, message.getHttpStatus());
     }

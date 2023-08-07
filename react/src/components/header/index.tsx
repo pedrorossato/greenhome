@@ -1,10 +1,14 @@
 import React from 'react';
 import {useLocation, useNavigate} from "react-router-dom";
-import {Button, Container} from "@mui/material";
+import {Container} from "@mui/material";
 import {StyledNav, StyledNavButton} from "./styles";
 const Logo = require("../../assets/logo.png");
 
-const Header : React.FC = () => {
+interface HeaderProps {
+  children?: React.ReactNode;
+}
+
+const Header : React.FC<HeaderProps> = ({children}) => {
   const navigate = useNavigate();
   const location = useLocation();
   
@@ -43,6 +47,7 @@ const Header : React.FC = () => {
             selected={isActualLocation('/blog')}>
             Blog
           </StyledNavButton>
+          {children}
         </StyledNav>
     </Container>
   );
