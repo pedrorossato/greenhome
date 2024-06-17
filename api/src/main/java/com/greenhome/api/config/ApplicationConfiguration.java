@@ -1,6 +1,7 @@
 package com.greenhome.api.config;
 
 import com.greenhome.api.service.user.UserService;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;

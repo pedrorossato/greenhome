@@ -1,7 +1,7 @@
 package com.greenhome.api.service.getintouch;
 
-import com.greenhome.api.model.getintouch.GetInTouch;
+import com.greenhome.api.dto.getintouch.PostGetInTouchRequest;
 
 public interface GetInTouchService {
-    void save(GetInTouch getInTouch);
+    void save(PostGetInTouchRequest postGetInTouchRequest);
 }

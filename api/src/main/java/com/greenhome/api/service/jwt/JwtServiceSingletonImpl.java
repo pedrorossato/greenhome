@@ -1,5 +1,6 @@
 package com.greenhome.api.service.jwt;
 
+import com.greenhome.api.util.DateUtils;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -19,17 +20,17 @@ import java.util.function.Function;
 @Scope("singleton")
 public class JwtServiceSingletonImpl implements JwtService {
     
-    private static String SECRET_KEY;
+    private final String SECRET_KEY;
 
-    private static int HOURS_TO_JWT_EXPIRES;
+    private final int MINUTES_TO_JWT_EXPIRES;
 
 
     public JwtServiceSingletonImpl(
             @Value("${secret.key}") String secretKey,  
-            @Value("${hours.to.jwt.expires}") int hoursToJwtExpires
+            @Value("${minutes.to.jwt.expires}") int minutes
     ) {
         SECRET_KEY = secretKey;
-        HOURS_TO_JWT_EXPIRES = hoursToJwtExpires;
+        MINUTES_TO_JWT_EXPIRES = minutes;
     }
 
     @Override
@@ -57,8 +58,8 @@ public class JwtServiceSingletonImpl implements JwtService {
         return Jwts.builder()
                 .setClaims(extraClaims)
                 .setSubject(userDetails.getUsername())
-                .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() * 60 * 60 * HOURS_TO_JWT_EXPIRES))
+                .setIssuedAt(DateUtils.now())
+                .setExpiration(DateUtils.nowPlusMinutes(MINUTES_TO_JWT_EXPIRES))
                 .signWith(getSigningKey(), SignatureAlgorithm.HS256)
                 .compact();
     }

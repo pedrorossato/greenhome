@@ -5,8 +5,6 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
-import java.util.logging.Logger;
-
 @Service
 public class EmailServiceJavaMailImpl implements EmailService {
     private final JavaMailSender emailSender;
@@ -26,5 +24,14 @@ public class EmailServiceJavaMailImpl implements EmailService {
         message.setSubject(subject); 
         message.setText(content);
         emailSender.send(message);
+    }
+
+    @Override
+    public StringBuilder buildEmailContent(String name, String email, String message) {
+        StringBuilder content = new StringBuilder();
+        content.append("Nome: ").append(name).append("\n");
+        content.append("Email: ").append(email).append("\n");
+        content.append("Mensagem: ").append(message).append("\n");
+        return content;
     }
 }

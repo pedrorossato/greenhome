@@ -8,4 +8,6 @@ public interface UserService extends UserDetailsService {
     void save(User user);
 
     User findByEmail(String email);
+
+    String findPhotoUrlByUserId(long id);
 }

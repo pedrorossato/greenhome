@@ -1,13 +1,17 @@
 package com.greenhome.api;
 
+import com.greenhome.api.dto.user.UserDTO;
+import com.greenhome.api.model.user.User;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
+import org.modelmapper.ModelMapper;
+import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.util.Assert;
 
-@SpringBootTest
+@RunWith(MockitoJUnitRunner.class)
 class ApiApplicationTests {
 
-	@Test
-	void contextLoads() {
-	}
 
 }

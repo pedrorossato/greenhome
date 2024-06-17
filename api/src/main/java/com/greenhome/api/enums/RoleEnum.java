@@ -1,16 +1,17 @@
 package com.greenhome.api.enums;
 
-public enum RoleEnum {
+public enum RoleEnum implements BaseEnum {
     USER("ROLE_USER"), 
     ADMIN("ROLE_ADMIN");
     
-    private String role;
+    private final String description;
 
-    RoleEnum(String role) {
-        this.role = role;
+    RoleEnum(String description) {
+        this.description = description;
     }
 
-    public String getRole() {
-        return role;
+    @Override
+    public String getDescription() {
+        return description;
     }
 }

@@ -2,12 +2,15 @@ package com.greenhome.api.model.user;
 
 import com.greenhome.api.enums.RoleEnum;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Table(name = "\"user\"")
@@ -17,53 +20,42 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     
+    @Setter
+    @Getter
     @Column(name = "name")
     private String name;
     
+    @Setter
+    @Getter
     @Column(name = "email")
     private String email;
     
+    @Getter
+    @Setter
     @Column(name = "password")
     private String password;
     
+    @Getter
+    @Setter
     @Column(name = "role")
     @Enumerated(EnumType.STRING)
     private RoleEnum roleEnum;
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public RoleEnum getRole() {
-        return roleEnum;
-    }
-
-    public void setRole(RoleEnum roleEnum) {
-        this.roleEnum = roleEnum;
-    }
+    @Getter
+    @Setter
+    @Column(name = "photo_uuid")
+    private UUID photoUUID;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         switch (this.roleEnum) {
             case USER -> {
-                return List.of(new SimpleGrantedAuthority(RoleEnum.USER.getRole()));
+                return List.of(new SimpleGrantedAuthority(RoleEnum.USER.getDescription()));
             }
             case ADMIN -> { 
                 return List.of(
-                        new SimpleGrantedAuthority(RoleEnum.USER.getRole()),
-                        new SimpleGrantedAuthority(RoleEnum.ADMIN.getRole())
+                        new SimpleGrantedAuthority(RoleEnum.USER.getDescription()),
+                        new SimpleGrantedAuthority(RoleEnum.ADMIN.getDescription())
                 );
             }
         }
@@ -73,15 +65,6 @@ public class User implements UserDetails {
     @Override
     public String getUsername() {
         return this.email;
-    }
-
-    @Override
-    public String getPassword() {
-        return this.password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     @Override

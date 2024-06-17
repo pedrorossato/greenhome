@@ -1,4 +1,6 @@
 package com.greenhome.api.dto.authentication;
 
-public record RegisterRequest (String name, String email, String password) {
+import org.springframework.web.multipart.MultipartFile;
+
+public record RegisterRequest (String name, String email, String password, MultipartFile photo) {
 }

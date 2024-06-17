@@ -29,15 +29,21 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
-                .cors(AbstractHttpConfigurer::disable)
+                .cors(httpSecurityCorsConfigurer -> httpSecurityCorsConfigurer.configurationSource(request -> {
+                    var cors = new org.springframework.web.cors.CorsConfiguration();
+                    cors.setAllowedOrigins(java.util.List.of("*"));
+                    cors.setAllowedMethods(java.util.List.of("GET", "POST", "PUT", "DELETE"));
+                    cors.setAllowedHeaders(java.util.List.of("*"));
+                    return cors;
+                }))
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/v1/auth/**").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/api/v1/get-in-touch").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/api/v1/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/v1/**").hasRole(RoleEnum.ADMIN.name())
                         .requestMatchers(HttpMethod.PUT, "/api/v1/**").hasRole(RoleEnum.ADMIN.name())
                         .requestMatchers(HttpMethod.DELETE, "/api/v1/**").hasRole(RoleEnum.ADMIN.name())
+                        .requestMatchers(HttpMethod.POST, "/api/v1/get-in-touch").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/v1/**").permitAll()
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider)
