@@ -1,5 +1,6 @@
 import Image from 'next/image';
 
+import { PropertyMapsComponent } from '@/components/maps/property';
 import {
   Table,
   TableBody,
@@ -18,9 +19,13 @@ import { type Property } from '@/types/properties/property';
 import { PropertyType } from '@/types/properties/property-type';
 import { CheckCircle, CircleOff } from 'lucide-react';
 
+import EletronicGate from '../../../../public/eletronicgate.png';
 import Elevator from '../../../../public/elevator.png';
 import EntranceHall from '../../../../public/entrancehall.png';
 import CentralGas from '../../../../public/gascentral.png';
+import Gym from '../../../../public/gym.png';
+import Intercom from '../../../../public/intercom.png';
+import SplitACWaiting from '../../../../public/splitACWaiting.png';
 
 export default async function PropertyPage({
   params,
@@ -53,8 +58,9 @@ export default async function PropertyPage({
       : Promise.resolve(undefined),
   ]);
 
-  const coverUrl = documents.find((d) => d.type === PropertyDocumentType.COVER)
-    ?.url;
+  const cover = documents.find(
+    (doc) => doc.type === PropertyDocumentType.COVER,
+  );
 
   const building =
     property.type === PropertyType.BUILDING
@@ -62,27 +68,18 @@ export default async function PropertyPage({
       : undefined;
 
   return (
-    <main>
-      <section className="container flex flex-wrap py-8">
-        <div className="w-full md:w-1/2 ">
-          <h1>{property.name}</h1>
+    <main className="text-justify">
+      <section>
+        <div className="container flex flex-wrap">
+          <h1 className="w-full text-6xl py-4 text-center">{property.name}</h1>
           <p>{property.description}</p>
-        </div>
-        <div className="w-full md:w-1/2">
-          {coverUrl ? (
-            <>
-              <img src={coverUrl} alt={'cover'} />
-            </>
-          ) : (
-            <></>
-          )}
+          <PropertyMapsComponent properties={[property]} />
         </div>
       </section>
+
       {building ? (
         <section className="container flex flex-col items-center">
-          <h2 className="text-4xl text-center pb-2 border-b-2 border-black">
-            Progresso da obra
-          </h2>
+          <h2 className="text-4xl text-center pb-2">Progresso da obra</h2>
           <div className="flex flex-col justify-between mb-1 w-full">
             <span className="text-base font-medium  dark:text-white">
               Terraplanagem
@@ -180,9 +177,7 @@ export default async function PropertyPage({
       )}
       {building ? (
         <section className="container flex flex-col items-center py-8">
-          <h2 className="text-4xl pb-2 border-b-2 border-black mb-4">
-            Comodidades
-          </h2>
+          <h2 className="text-4xl pb-2 mb-4">Comodidades</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             {building.centralGas ? (
               <div className="flex">
@@ -229,12 +224,7 @@ export default async function PropertyPage({
             )}
             {building.gym ? (
               <div className="flex">
-                <Image
-                  className="mr-2"
-                  width={64}
-                  alt="cetralgas"
-                  src={EntranceHall}
-                />
+                <Image className="mr-2" width={64} alt="gym" src={Gym} />
                 <div>
                   <h2 className="text-2xl">Academia</h2>
                 </div>
@@ -247,8 +237,8 @@ export default async function PropertyPage({
                 <Image
                   className="mr-2"
                   width={64}
-                  alt="cetralgas"
-                  src={EntranceHall}
+                  alt="eletronicGate"
+                  src={EletronicGate}
                 />
                 <div>
                   <h2 className="text-2xl">Portão eletrônico</h2>
@@ -262,8 +252,8 @@ export default async function PropertyPage({
                 <Image
                   className="mr-2"
                   width={64}
-                  alt="cetralgas"
-                  src={EntranceHall}
+                  alt="intercom"
+                  src={Intercom}
                 />
                 <div>
                   <h2 className="text-2xl">Interfones</h2>
@@ -277,8 +267,8 @@ export default async function PropertyPage({
                 <Image
                   className="mr-2"
                   width={64}
-                  alt="cetralgas"
-                  src={EntranceHall}
+                  alt="splitACWaiting"
+                  src={SplitACWaiting}
                 />
                 <div>
                   <h2 className="text-2xl">Espera para ar condicionado</h2>
@@ -294,9 +284,7 @@ export default async function PropertyPage({
       )}
       {apartments ? (
         <section className="container flex flex-col items-center py-8">
-          <h2 className="text-4xl pb-2 mb-4 border-b-2 border-black">
-            Apartamentos
-          </h2>
+          <h2 className="text-4xl pb-2 mb-4">Apartamentos</h2>
           <Table className="w-full">
             <TableHeader>
               <TableRow>

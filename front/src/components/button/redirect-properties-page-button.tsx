@@ -15,7 +15,7 @@ export default function RedirectPropertiesPageButton({
     <Button
       className={className}
       onClick={() => {
-        router.push('/properties');
+        router.push('/empreendimentos');
       }}
     >
       Visualizar todos

@@ -3,11 +3,9 @@ import 'leaflet-defaulticon-compatibility';
 import 'leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css';
 
 import { useRouter } from 'next/navigation';
-import { FaExternalLinkAlt } from 'react-icons/fa';
 import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet';
 
 import { type Property } from '@/types/properties/property';
-import { divIcon } from 'leaflet';
 
 export default function PropertyMaps({
   properties,
@@ -15,10 +13,9 @@ export default function PropertyMaps({
   properties: Property[];
 }): JSX.Element {
   const router = useRouter();
-  console.log(properties);
   return (
     <MapContainer
-      className="w-full h-72"
+      className="w-full h-full"
       center={[-29.704292, -53.718593]}
       zoom={13}
       scrollWheelZoom={false}
@@ -37,7 +34,7 @@ export default function PropertyMaps({
             <Popup className="flex flex-col">
               <div
                 onClick={() => {
-                  router.push(`/properties/${p.tag}`);
+                  router.push(`/empreendimentos/${p.tag}`);
                 }}
               >
                 <p>Clique para ver {p.name}</p>

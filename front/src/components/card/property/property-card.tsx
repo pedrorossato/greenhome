@@ -23,7 +23,7 @@ export default function PropertyCard({
     <Card
       className="cursor-pointer overflow-hidden hover:shadow-2xl transition-all duration-300 ease-in-out"
       onClick={() => {
-        router.push('/properties/' + property.tag);
+        router.push('/empreendimentos/' + property.tag);
       }}
       key={property.tag}
     >

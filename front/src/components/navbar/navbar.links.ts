@@ -4,7 +4,7 @@ const NavbarLinks = [
     title: 'Home',
   },
   {
-    id: '/properties',
+    id: '/empreendimentos',
     title: 'Empreendimentos',
   },
   {

@@ -110,10 +110,10 @@ export const columns: Array<ColumnDef<Property>> = [
                   const url =
                     property.type === PropertyType.BUILDING
                       ? window.location.hostname +
-                        '/properties/buildings/' +
+                        '/empreendimentos/buildings/' +
                         property.tag
                       : window.location.hostname +
-                        '/properties/' +
+                        '/empreendimentos/' +
                         property.tag;
                   await navigator.clipboard.writeText(url);
                 }}
