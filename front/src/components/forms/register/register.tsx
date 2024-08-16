@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -47,21 +48,8 @@ export default function RegisterForm(): JSX.Element {
   });
 
   return (
-    <form className="max-w-sm mx-auto" onSubmit={onSubmit}>
-      <div className="mb-5">
-        <label
-          className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-          htmlFor="file_input"
-        >
-          Escolha uma foto
-        </label>
-        <input
-          className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
-          id="file_input"
-          type="file"
-          {...register('photo')}
-        />
-      </div>
+    <form className="w-full md:w-1/2" onSubmit={onSubmit}>
+      <h1 className="text-center text-4xl">Registrar-se</h1>
       <div className="mb-5">
         <label className="block mb-2 text-sm font-medium text-gray-900">
           Nome
@@ -75,6 +63,20 @@ export default function RegisterForm(): JSX.Element {
             {...register('name')}
           />
         </div>
+      </div>
+      <div className="mb-5">
+        <label
+          className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+          htmlFor="file_input"
+        >
+          Escolha uma foto
+        </label>
+        <input
+          className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+          id="file_input"
+          type="file"
+          {...register('photo')}
+        />
       </div>
       <div className="mb-5">
         <label className="block mb-2 text-sm font-medium text-gray-900">
@@ -105,8 +107,14 @@ export default function RegisterForm(): JSX.Element {
           />
         </div>
       </div>
+      <div className="mb-5 text-right">
+        <small>Já tem uma conta? </small>
+        <Link style={{ fontSize: 14, fontWeight: 'bold' }} href="/login">
+          Faça login
+        </Link>
+      </div>
       <button
-        className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center "
+        className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg w-full px-5 py-2.5 text-center "
         type="submit"
       >
         {loading ? (

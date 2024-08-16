@@ -9,4 +9,5 @@ public class UserDTO {
     public String email;
     public String[] roles;
     private String token;
+    public String image;
 }

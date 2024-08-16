@@ -16,7 +16,7 @@ export default function PropertyDatatable({
   return (
     <div className="flex flex-col justify-center items-center m-10">
       <DataTable
-        title="Propriedades"
+        title="Empreendimentos"
         addButton={AddPropertyButton()}
         columns={columns}
         data={properties}

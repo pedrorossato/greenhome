@@ -11,6 +11,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Comparator;
 import java.util.List;
 
 @Transactional
@@ -30,7 +31,10 @@ public class ApartmentServiceTransactionalImpl implements ApartmentService {
     @Override
     public List<ApartmentDTO> findAllByPropertyId(long propertyId) {
         List<Apartment> allByPropertyId = apartmentRepository.findAllByPropertyId(propertyId);
-        return allByPropertyId.stream().map(apartment -> modelMapper.map(apartment, ApartmentDTO.class)).toList();
+        return allByPropertyId.stream()
+                .sorted(Comparator.comparing(Apartment::getName))
+                .map(apartment -> modelMapper.map(apartment, ApartmentDTO.class))
+                .toList();
     }
 
     @Override

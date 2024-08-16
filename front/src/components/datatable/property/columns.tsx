@@ -39,6 +39,9 @@ export const columns: Array<ColumnDef<Property>> = [
       );
     },
     enableSorting: true,
+    cell: ({ row }) => {
+      return <div className="text-center">{row.original.name}</div>;
+    },
   },
   {
     accessorKey: 'type',
@@ -87,6 +90,9 @@ export const columns: Array<ColumnDef<Property>> = [
   {
     accessorKey: 'address',
     header: 'Endereço',
+    cell: ({ row }) => {
+      return <div className="text-center">{row.original.address}</div>;
+    },
   },
   {
     header: 'Opções',
@@ -94,7 +100,7 @@ export const columns: Array<ColumnDef<Property>> = [
       const property = row.original;
 
       return (
-        <div className="text-right" title="Opções">
+        <div className="text-center" title="Opções">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" className="h-8 w-8 p-0">

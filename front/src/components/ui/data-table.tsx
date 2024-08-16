@@ -46,13 +46,13 @@ export function DataTable<TData, TValue>({
   });
 
   return (
-    <div className="rounded-md border bg-white">
+    <div className="w-3/4 rounded-md border bg-white">
       <Table>
         <TableHeader>
           {title ? (
             <TableRow>
               <TableHead
-                className="text-black text-center"
+                className="text-black text-center text-lg"
                 colSpan={columns.length}
               >
                 <div className="flex flex-row justify-between">
@@ -68,7 +68,10 @@ export function DataTable<TData, TValue>({
             <TableRow key={headerGroup.id}>
               {headerGroup.headers.map((header) => {
                 return (
-                  <TableHead className="text-neutral-700" key={header.id}>
+                  <TableHead
+                    className="text-neutral-700 text-center"
+                    key={header.id}
+                  >
                     {header.isPlaceholder
                       ? null
                       : flexRender(

@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { getServerSession } from 'next-auth/next';
 import { Inter } from 'next/font/google';
 import React from 'react';
 import { ToastContainer } from 'react-toastify';
@@ -6,7 +7,7 @@ import { ToastContainer } from 'react-toastify';
 import Footer from '@/components/footer/footer';
 import Navbar from '@/components/navbar/navbar';
 
-import ClientProviders from '@/providers/client.providers';
+import ClientProviders from '@/app/providers/client.providers';
 
 import './globals.css';
 import 'react-toastify/dist/ReactToastify.css';
@@ -18,20 +19,19 @@ export const metadata: Metadata = {
   description: '',
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
-}): JSX.Element {
+}): Promise<JSX.Element> {
+  const session = await getServerSession();
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={`${inter.className} text-lg`}>
         <Navbar />
         <div className="h-28"></div>
         <ToastContainer />
-        <div className="bg-primary-gray">
-          <ClientProviders>{children}</ClientProviders>
-        </div>
+        <ClientProviders session={session}>{children}</ClientProviders>
         <Footer />
       </body>
     </html>

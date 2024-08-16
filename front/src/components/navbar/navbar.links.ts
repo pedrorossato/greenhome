@@ -12,7 +12,7 @@ const NavbarLinks = [
     title: 'Blog',
   },
   {
-    id: '/get-in-touch',
+    id: '/contato',
     title: 'Contato',
   },
 ];

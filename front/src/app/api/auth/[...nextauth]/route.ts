@@ -58,7 +58,7 @@ export const authOptions: NextAuthOptions = {
       }
       const jwtPayload = JSON.parse(atob(session.user.token.split('.')[1]));
       session.expires = new Date(jwtPayload.exp * 1000).toISOString();
-      if (new Date() > new Date(session.expires)) return undefined;
+      if (new Date() > new Date(session.expires)) return {};
       return session;
     },
   },

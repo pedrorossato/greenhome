@@ -1,14 +1,8 @@
 import Image from 'next/image';
 
+import PropertyDocumentCarousel from '@/components/carousel/property-document/propert-document-carousel';
 import { PropertyMapsComponent } from '@/components/maps/property';
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from '@/components/ui/table';
+import ApartmentTable from '@/components/table/apartment/apartment-table';
 
 import { fetcher } from '@/services/fetcher';
 import type Apartment from '@/types/apartments/apartment';
@@ -17,7 +11,7 @@ import { type PropertyDocument } from '@/types/properties/document/property-docu
 import { PropertyDocumentType } from '@/types/properties/document/property-document-type';
 import { type Property } from '@/types/properties/property';
 import { PropertyType } from '@/types/properties/property-type';
-import { CheckCircle, CircleOff } from 'lucide-react';
+import { BedDouble, RulerIcon } from 'lucide-react';
 
 import EletronicGate from '../../../../public/eletronicgate.png';
 import Elevator from '../../../../public/elevator.png';
@@ -58,8 +52,48 @@ export default async function PropertyPage({
       : Promise.resolve(undefined),
   ]);
 
+  const minArea =
+    apartments && apartments.length > 0
+      ? apartments.reduce((min, apartment) => {
+          return apartment.area < min ? apartment.area : min;
+        }, apartments[0].area)
+      : undefined;
+
+  const maxArea =
+    apartments && apartments.length > 0
+      ? apartments.reduce((max, apartment) => {
+          return apartment.area > max ? apartment.area : max;
+        }, apartments[0].area)
+      : undefined;
+
+  const minBedroomCount =
+    apartments && apartments.length > 0
+      ? apartments.reduce((min, apartment) => {
+          return apartment.bedroomCount < min ? apartment.bedroomCount : min;
+        }, apartments[0].bedroomCount)
+      : undefined;
+
+  const maxBedroomCount =
+    apartments && apartments.length > 0
+      ? apartments.reduce((max, apartment) => {
+          return apartment.bedroomCount > max ? apartment.bedroomCount : max;
+        }, apartments[0].bedroomCount)
+      : undefined;
+
   const cover = documents.find(
     (doc) => doc.type === PropertyDocumentType.COVER,
+  );
+
+  const floorPlants = documents.filter(
+    (doc) => doc.type === PropertyDocumentType.FLOOR_PLAN,
+  );
+
+  const photos = documents.filter(
+    (doc) => doc.type === PropertyDocumentType.GALLERY,
+  );
+
+  const videos = documents.filter(
+    (doc) => doc.type === PropertyDocumentType.VIDEO,
   );
 
   const building =
@@ -69,10 +103,35 @@ export default async function PropertyPage({
 
   return (
     <main className="text-justify">
-      <section>
-        <div className="container flex flex-wrap">
-          <h1 className="w-full text-6xl py-4 text-center">{property.name}</h1>
-          <p>{property.description}</p>
+      <section className="relative py-48">
+        <div
+          className="absolute inset-0 bg-cover bg-center filter blur-sm"
+          style={{
+            backgroundImage: `url(${cover?.url})`,
+          }}
+        ></div>
+        <div className="absolute inset-0 bg-black opacity-50 z-0"></div>
+        <div className="container relative z-10 flex flex-wrap items-center justify-start text-white">
+          <h1 className="w-full text-6xl py-4">{property.name}</h1>
+          <div className="flex flex-col gap-2">
+            <div className="flex flex-row">
+              <RulerIcon className="mx-2" />
+              <p>
+                {minArea}m<sup>2</sup> a {maxArea}m<sup>2</sup>
+              </p>
+            </div>
+            <div className="flex flex-row">
+              <BedDouble className="mx-2" />
+              <p>
+                {minBedroomCount} a {maxBedroomCount} quartos
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section className="container flex flex-wrap items-center justify-center py-14">
+        <p className="w-full mb-14">{property.description}</p>
+        <div className="w-full h-96">
           <PropertyMapsComponent properties={[property]} />
         </div>
       </section>
@@ -242,6 +301,7 @@ export default async function PropertyPage({
                 />
                 <div>
                   <h2 className="text-2xl">Portão eletrônico</h2>
+                  <p>Nas garagens</p>
                 </div>
               </div>
             ) : (
@@ -271,7 +331,7 @@ export default async function PropertyPage({
                   src={SplitACWaiting}
                 />
                 <div>
-                  <h2 className="text-2xl">Espera para ar condicionado</h2>
+                  <h2 className="text-xl">Espera para A/C split</h2>
                 </div>
               </div>
             ) : (
@@ -282,77 +342,19 @@ export default async function PropertyPage({
       ) : (
         <></>
       )}
-      {apartments ? (
-        <section className="container flex flex-col items-center py-8">
-          <h2 className="text-4xl pb-2 mb-4">Apartamentos</h2>
-          <Table className="w-full">
-            <TableHeader>
-              <TableRow>
-                <TableHead>Apartamento</TableHead>
-                <TableHead>Área</TableHead>
-                <TableHead>Quartos</TableHead>
-                <TableHead>Banheiros</TableHead>
-                <TableHead>Sacada</TableHead>
-                <TableHead>Garagem</TableHead>
-                <TableHead>Churrasqueira</TableHead>
-                <TableHead>Área de Serviço</TableHead>
-                <TableHead>Closet</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {apartments.map((apartment) => (
-                <TableRow key={apartment.id}>
-                  <TableCell className="font-medium">
-                    {apartment.name}
-                  </TableCell>
-                  <TableCell>
-                    {apartment.area}m<sup>2</sup>
-                  </TableCell>
-                  <TableCell>{apartment.bedroomCount}</TableCell>
-                  <TableCell>{apartment.bathroomCount}</TableCell>
-                  <TableCell>
-                    {apartment.hasBalcony ? (
-                      <CheckCircle color="green" />
-                    ) : (
-                      <CircleOff color="red" />
-                    )}
-                  </TableCell>
-                  <TableCell>
-                    {apartment.hasGarage ? (
-                      <CheckCircle color="green" />
-                    ) : (
-                      <CircleOff color="red" />
-                    )}
-                  </TableCell>
-                  <TableCell>
-                    {apartment.hasBarbecueGrill ? (
-                      <CheckCircle color="green" />
-                    ) : (
-                      <CircleOff color="red" />
-                    )}
-                  </TableCell>
-                  <TableCell>
-                    {apartment.hasServiceArea ? (
-                      <CheckCircle color="green" />
-                    ) : (
-                      <CircleOff color="red" />
-                    )}
-                  </TableCell>
-                  <TableCell>
-                    {apartment.hasCloset ? (
-                      <CheckCircle color="green" />
-                    ) : (
-                      <CircleOff color="red" />
-                    )}
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </section>
-      ) : (
-        <></>
-      )}
+      <ApartmentTable apartments={apartments} />
+      <section className="container flex flex-col items-center justify-center py-4">
+        <h1 className="text-4xl">Plantas Humanizadas</h1>
+        <PropertyDocumentCarousel documents={floorPlants} />
+      </section>
+      <section className="container flex flex-col items-center justify-center py-4">
+        <h1 className="text-4xl">Fotos</h1>
+        <PropertyDocumentCarousel documents={photos} />
+      </section>
+      <section className="container flex flex-col items-center justify-center py-4">
+        <h1 className="text-4xl">Vídeos</h1>
+        <PropertyDocumentCarousel documents={videos} />
+      </section>
     </main>
   );
 }

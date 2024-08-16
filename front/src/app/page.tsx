@@ -42,7 +42,7 @@ export default async function Home(): Promise<JSX.Element> {
       </section>
       <section className="w-full">
         <div className="container py-10">
-          <div className="flex justify-center flex-wrap flex-row bg-white rounded-lg">
+          <div className="flex justify-center flex-wrap flex-row">
             <div className="w-full md:w-1/2 p-5 text-justify">
               <div className="border-l-4 border-primary-blue px-2">
                 <p>Sobre nós</p>

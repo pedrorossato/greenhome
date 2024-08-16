@@ -1,5 +1,6 @@
 'use client';
 
+import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
@@ -12,6 +13,7 @@ import NavbarLinks from '@/components/navbar/navbar.links';
 export default function Navbar(): JSX.Element {
   const pathname = usePathname();
   const router = useRouter();
+  // const { data: session } = useSession();
   const [toggle, setToggle] = useState(false);
 
   return (
@@ -40,6 +42,13 @@ export default function Navbar(): JSX.Element {
                   </li>
                 ),
               )}
+              {/* {session.data?.user.image ? (
+                <li>
+                  <img src={session.data?.user.image} alt="sadasd" />
+                </li>
+              ) : (
+                <></>
+              )} */}
             </ul>
 
             <div className="sm:hidden flex flex-1 justify-end items-center">
