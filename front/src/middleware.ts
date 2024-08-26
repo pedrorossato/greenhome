@@ -18,8 +18,11 @@ export default async function middleware(
   const cookie = cookies().get('session')?.value;
   const jwtPayload = cookie ? await decrypt(cookie) : null;
   const session = jwtPayload?.session as Session;
-
-  if (isProtectedRoute && !session) {
+  console.log('Path:', path);
+  console.log('Cookie:', cookie);
+  console.log('JWT Payload:', jwtPayload);
+  console.log('Session:', session);
+  if (isProtectedRoute && !session?.user.id) {
     return NextResponse.redirect(new URL('/login', req.nextUrl), {
       status: 303,
     });
