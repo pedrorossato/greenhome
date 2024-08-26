@@ -20,7 +20,9 @@ export default async function middleware(
   const session = jwtPayload?.session as Session;
 
   if (isProtectedRoute && !session?.user.id) {
-    return NextResponse.redirect(new URL('/login', req.nextUrl));
+    return NextResponse.redirect(new URL('/login', req.nextUrl), {
+      status: 303,
+    });
   }
 
   if (path === '/admin' && !session.user.roles.includes('ROLE_ADMIN')) {
