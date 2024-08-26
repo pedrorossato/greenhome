@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { FaBuilding, FaClock, FaRegBuilding, FaRegClock } from 'react-icons/fa';
+import { FaRegBuilding, FaRegClock } from 'react-icons/fa';
 import { GiCrane } from 'react-icons/gi';
 
 import RedirectPropertiesPageButton from '@/components/button/property/redirect-properties-page-button';

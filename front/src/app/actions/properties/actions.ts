@@ -60,8 +60,8 @@ function getProperty(data: FormData): Property {
     name: data.get('name')?.toString() ?? '',
     address: data.get('address')?.toString() ?? '',
     description: data.get('description')?.toString() ?? '',
-    status: PropertyStatus[data.get('status')],
-    type: PropertyType[data.get('type')],
+    status: PropertyStatus[data.get('status') as keyof typeof PropertyStatus],
+    type: PropertyType[data.get('type') as keyof typeof PropertyType],
     latitude: data.get('latitude') ? Number(data.get('latitude')) : undefined,
     longitude: data.get('longitude')
       ? Number(data.get('longitude'))
@@ -101,7 +101,7 @@ function getProperty(data: FormData): Property {
       ? Number(data.get('finishingProgress'))
       : undefined;
     building.estimatedReleaseDate = data.get('estimatedReleaseDate')
-      ? new Date(data.get('estimatedReleaseDate')?.toString())
+      ? data.get('estimatedReleaseDate')?.toString()
       : undefined;
     property = building;
   }

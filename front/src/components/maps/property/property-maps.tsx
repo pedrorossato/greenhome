@@ -29,7 +29,7 @@ export default function PropertyMaps({
           <Marker
             title={p.name}
             key={p.id}
-            position={[p.latitude, p.longitude]}
+            position={[p.latitude ?? 0, p.longitude ?? 0]}
           >
             <Popup className="flex flex-col">
               <div

@@ -12,7 +12,6 @@ import { PropertyDocumentType } from '@/types/properties/document/property-docum
 import { type Property } from '@/types/properties/property';
 import {
   PropertyStatus,
-  PropertyStatusColor,
   PropertyStatusLabel,
 } from '@/types/properties/property-status';
 import { PropertyType } from '@/types/properties/property-type';
