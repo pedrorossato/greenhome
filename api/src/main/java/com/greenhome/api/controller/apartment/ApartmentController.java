@@ -1,7 +1,7 @@
 package com.greenhome.api.controller.apartment;
 
 import com.greenhome.api.dto.apartment.ApartmentDTO;
-import com.greenhome.api.dto.apartment.PostApartmentRequest;
+import com.greenhome.api.dto.apartment.SaveApartmentRequest;
 import com.greenhome.api.service.apartment.ApartmentService;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
@@ -24,8 +24,13 @@ public class ApartmentController {
     }
     
     @PostMapping
-    public void save(@RequestBody @Valid PostApartmentRequest postApartmentRequest) {
-        apartmentService.save(postApartmentRequest);
+    public void create(@RequestBody @Valid SaveApartmentRequest saveApartmentRequest) {
+        apartmentService.create(saveApartmentRequest);
+    }
+    
+    @PutMapping("{id}")
+    public void update(@PathVariable long id, @RequestBody @Valid SaveApartmentRequest saveApartmentRequest) {
+        apartmentService.update(id, saveApartmentRequest);
     }
     
     @DeleteMapping("/{apartmentId}")

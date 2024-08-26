@@ -8,6 +8,8 @@ import jakarta.persistence.Table;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.util.Date;
+
 @Data
 @Entity
 @Table(name = "building")
@@ -47,4 +49,6 @@ public class Building extends Property {
     private boolean partyHall;
 
     private boolean playground;
+    
+    private Date estimatedReleaseDate;
 }

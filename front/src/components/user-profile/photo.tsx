@@ -1,22 +1,13 @@
-import { fetcher } from '@/services/fetcher';
-
 export default async function Photo({
-  userId,
+  imageUrl,
 }: {
-  userId: number | undefined;
+  imageUrl: string;
 }): Promise<JSX.Element> {
-  const response = await fetcher<string>(
-    '/user/' + userId + '/photoUrl',
-    'GET',
-    undefined,
-    ['photoUrl', `${userId}`],
-  );
-
   return (
     <div className="flex justify-center px-4 pt-4">
       <img
         className="mb-3 h-24 w-24 rounded-full shadow-lg"
-        src={response}
+        src={imageUrl}
         alt="User photo"
       />
     </div>

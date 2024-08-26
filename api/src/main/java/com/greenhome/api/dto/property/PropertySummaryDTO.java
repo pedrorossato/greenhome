@@ -8,7 +8,7 @@ import java.util.UUID;
 
 @Data
 @AllArgsConstructor
-public class PropertySummary {
+public class PropertySummaryDTO {
     private String tag;
     private String name;
     private PropertyStatusEnum status;

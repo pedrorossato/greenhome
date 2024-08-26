@@ -63,7 +63,7 @@ public class PropertyDocumentTransactionalImpl implements PropertyDocumentServic
     }
 
     @Override
-    public void save(PostPropertyDocumentRequest postPropertyDocumentRequest) {
+    public void create(PostPropertyDocumentRequest postPropertyDocumentRequest) {
         Property property = propertyRepository.findById(postPropertyDocumentRequest.propertyId()).orElseThrow(() -> new NotFoundException("Property not found"));
         PropertyDocument propertyDocument = modelMapper.map(postPropertyDocumentRequest, PropertyDocument.class);
         propertyDocument.setProperty(property);

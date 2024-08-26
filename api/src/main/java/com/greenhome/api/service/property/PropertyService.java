@@ -1,13 +1,14 @@
 package com.greenhome.api.service.property;
 
-import com.greenhome.api.dto.property.PostPropertyRequest;
+import com.greenhome.api.dto.property.SavePropertyRequest;
 import com.greenhome.api.dto.property.PropertyDTO;
-import com.greenhome.api.dto.property.PropertySummary;
-import com.greenhome.api.dto.property.PutPropertyRequest;
+import com.greenhome.api.dto.property.PropertySummaryDTO;
 
 import java.util.List;
 
 public interface PropertyService {
+    long count();
+    
     List<PropertyDTO> findAll();
     
     PropertyDTO findById(long id);
@@ -16,11 +17,11 @@ public interface PropertyService {
     
     PropertyDTO findByTag(String tag);
     
-    List<PropertySummary> findAllSummary();
+    List<PropertySummaryDTO> findAllSummary();
     
-    void save(PostPropertyRequest postPropertyRequest);
+    void create(SavePropertyRequest savePropertyRequest);
 
-    void update(long id, PutPropertyRequest putPropertyRequest);
+    void update(long id, SavePropertyRequest putPropertyRequest);
     
     void delete(long id);
 

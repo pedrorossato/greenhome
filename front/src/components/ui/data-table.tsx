@@ -20,6 +20,8 @@ import {
   getSortedRowModel,
 } from '@tanstack/react-table';
 
+import { Button } from './button';
+
 interface DataTableProps<TData, TValue> {
   columns: Array<ColumnDef<TData, TValue>>;
   data: TData[];

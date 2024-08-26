@@ -1,6 +1,5 @@
 'use client';
 
-import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
@@ -10,15 +9,18 @@ import { MdClose } from 'react-icons/md';
 
 import NavbarLinks from '@/components/navbar/navbar.links';
 
-export default function Navbar(): JSX.Element {
+export default function Navbar({
+  children,
+}: {
+  children: React.ReactNode;
+}): JSX.Element {
   const pathname = usePathname();
   const router = useRouter();
-  // const { data: session } = useSession();
   const [toggle, setToggle] = useState(false);
 
   return (
-    <header className="bg-white h-28 shadow-lg w-full fixed z-[999]">
-      <div className={`sm:px-16 px-6 flex justify-center items-center`}>
+    <header className="bg-white  shadow-lg w-full fixed z-[9999]">
+      <div className={`sm:px-16 h-28 px-6 flex justify-center items-center`}>
         <div className={`xl:max-w-[1280px] w-full`}>
           <nav className="w-full flex py-1 justify-between items-center navbar">
             <Image
@@ -28,6 +30,7 @@ export default function Navbar(): JSX.Element {
               width={56}
               style={{ filter: 'drop-shadow(0 0 0.1rem white)' }}
             />
+
             <ul className="list-none sm:flex hidden justify-end items-center flex-1">
               {NavbarLinks.map(
                 (nav: { id: string; title: string }, index: number) => (
@@ -42,14 +45,9 @@ export default function Navbar(): JSX.Element {
                   </li>
                 ),
               )}
-              {/* {session.data?.user.image ? (
-                <li>
-                  <img src={session.data?.user.image} alt="sadasd" />
-                </li>
-              ) : (
-                <></>
-              )} */}
             </ul>
+
+            {children}
 
             <div className="sm:hidden flex flex-1 justify-end items-center">
               {toggle ? (

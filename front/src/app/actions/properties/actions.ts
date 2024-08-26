@@ -1,9 +1,8 @@
 'use server';
 
-import { getServerSession } from 'next-auth';
 import { revalidateTag } from 'next/cache';
 
-import { authOptions } from '@/app/api/auth/[...nextauth]/route';
+import { verifySession } from '@/app/lib/session';
 import { authenticatedFetcher } from '@/services/fetcher';
 import type Building from '@/types/properties/building/building';
 import { type Property } from '@/types/properties/property';
@@ -11,7 +10,8 @@ import { PropertyStatus } from '@/types/properties/property-status';
 import { PropertyType } from '@/types/properties/property-type';
 
 export async function createProperty(data: FormData): Promise<void> {
-  const session = await getServerSession(authOptions);
+  const session = await verifySession();
+
   const property = getProperty(data);
 
   await authenticatedFetcher(
@@ -26,7 +26,8 @@ export async function createProperty(data: FormData): Promise<void> {
 }
 
 export async function editProperty(data: FormData): Promise<void> {
-  const session = await getServerSession(authOptions);
+  const session = await verifySession();
+
   const propertyId = Number(data.get('id'));
   const property = getProperty(data);
 
@@ -42,7 +43,8 @@ export async function editProperty(data: FormData): Promise<void> {
 }
 
 export async function deleteProperty(id: number): Promise<void> {
-  const session = await getServerSession(authOptions);
+  const session = await verifySession();
+
   await authenticatedFetcher(
     '/property/' + id,
     'DELETE',
@@ -65,7 +67,6 @@ function getProperty(data: FormData): Property {
       ? Number(data.get('longitude'))
       : undefined,
   };
-
   if (property.type === PropertyType.BUILDING) {
     const building = property as Building;
     building.gym = data.get('gym')?.toString() === 'on';
@@ -98,6 +99,9 @@ function getProperty(data: FormData): Property {
       : undefined;
     building.finishingProgress = data.get('finishingProgress')
       ? Number(data.get('finishingProgress'))
+      : undefined;
+    building.estimatedReleaseDate = data.get('estimatedReleaseDate')
+      ? new Date(data.get('estimatedReleaseDate')?.toString())
       : undefined;
     property = building;
   }

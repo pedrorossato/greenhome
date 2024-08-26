@@ -23,5 +23,9 @@ export default async function AdminBuildingApartments({
     ['apartments', `${property.id}`],
   );
 
-  return <ApartmentDatatable property={property} apartments={apartments} />;
+  return (
+    <div className="py-64">
+      <ApartmentDatatable property={property} apartments={apartments} />
+    </div>
+  );
 }

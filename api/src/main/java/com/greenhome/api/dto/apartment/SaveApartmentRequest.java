@@ -1,6 +1,6 @@
 package com.greenhome.api.dto.apartment;
 
-public record PostApartmentRequest (
+public record SaveApartmentRequest(
     String name,
     long propertyId,
     double area,

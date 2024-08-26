@@ -28,8 +28,8 @@ public class PropertyDocumentController {
     }
     
     @PostMapping
-    public void save(@ModelAttribute PostPropertyDocumentRequest postPropertyDocumentRequest) {
-        propertyDocumentService.save(postPropertyDocumentRequest);
+    public void create(@ModelAttribute PostPropertyDocumentRequest postPropertyDocumentRequest) {
+        propertyDocumentService.create(postPropertyDocumentRequest);
     }
     
     @DeleteMapping("{id}")

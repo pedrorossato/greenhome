@@ -18,4 +18,5 @@ export default interface Building extends Property {
   bicycleStand: boolean;
   partyHall: boolean;
   playground: boolean;
+  estimatedReleaseDate?: string;
 }

@@ -19,7 +19,7 @@ export default function ApartmentTable({
   if (!apartments || apartments.length === 0) return <></>;
   return (
     <section className="container flex flex-col items-center py-8">
-      <h2 className="text-4xl pb-2 mb-4">Apartamentos</h2>
+      {/* <h2 className="text-4xl pb-2 mb-4">Apartamentos</h2> */}
       <Table className="w-full">
         <TableHeader>
           <TableRow>

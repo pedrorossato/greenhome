@@ -1,14 +1,14 @@
 'use server';
 
-import { getServerSession } from 'next-auth';
 import { revalidateTag } from 'next/cache';
 
-import { authOptions } from '@/app/api/auth/[...nextauth]/route';
+import { verifySession } from '@/app/lib/session';
 import { authenticatedFetcher } from '@/services/fetcher';
 import type Apartment from '@/types/apartments/apartment';
 
 export async function createApartment(data: FormData): Promise<void> {
-  const session = await getServerSession(authOptions);
+  const session = await verifySession();
+
   const apartment = getApartment(data);
 
   await authenticatedFetcher(
@@ -23,7 +23,7 @@ export async function createApartment(data: FormData): Promise<void> {
 }
 
 export async function deleteApartment(apartmentId: number): Promise<void> {
-  const session = await getServerSession(authOptions);
+  const session = await verifySession();
 
   await authenticatedFetcher(
     `/property/${undefined}/apartment/${apartmentId}`,

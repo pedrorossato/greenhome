@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface PostRepository extends JpaRepository<Post, Long> {
-    @Query("SELECT p FROM Post p ORDER BY p.createdDate DESC")
-    List<Post> findAllByOrderByCreatedDateDesc();
+
+    @Query(value = "SELECT p.* FROM post p ORDER BY p.created_date DESC LIMIT :limit OFFSET :offset", nativeQuery = true)
+    List<Post> findPaged(int offset, int limit);
 }

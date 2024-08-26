@@ -1,4 +1,4 @@
-import DeletePropertyDocumentButton from '@/components/button/delete-property-document-button';
+import DeletePropertyDocumentButton from '@/components/button/property/delete-property-document-button';
 import PropertyDocumentForm from '@/components/forms/properties/documents/property-document-form';
 import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import {

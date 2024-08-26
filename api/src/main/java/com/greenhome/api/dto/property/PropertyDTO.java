@@ -4,6 +4,8 @@ import com.greenhome.api.enums.PropertyStatusEnum;
 import com.greenhome.api.enums.PropertyTypeEnum;
 import lombok.Data;
 
+import java.util.Date;
+
 @Data
 public class PropertyDTO {
     private long id;
@@ -32,4 +34,5 @@ public class PropertyDTO {
     private boolean bicycleStand;
     private boolean partyHall;
     private boolean playground;
+    private Date estimatedReleaseDate;
 }

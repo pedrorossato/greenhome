@@ -3,12 +3,20 @@ export const fetcher = async <T>(
   method: string,
   body?: BodyInit,
   tags?: string[],
+  contentType?: string,
 ): Promise<T> => {
+  const requestHeaders: HeadersInit = {};
+
+  if (contentType) {
+    requestHeaders['Content-Type'] = contentType;
+  }
+
   const response = await fetch(process.env.NEXT_PUBLIC_API_URL + url, {
     method,
     body,
     cache: tags ? undefined : 'no-cache',
     next: tags ? { tags, revalidate: 3600 } : undefined,
+    headers: requestHeaders,
   });
 
   if (!response.ok) {
@@ -17,9 +25,9 @@ export const fetcher = async <T>(
     return null as T;
   }
 
-  const contentType = response.headers.get('Content-Type');
+  const responseContentType = response.headers.get('Content-Type');
 
-  if (contentType?.includes('application/json')) {
+  if (responseContentType?.includes('application/json')) {
     const data = await response.json();
     return data as T;
   }

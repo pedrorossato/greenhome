@@ -1,43 +1,35 @@
 'use server';
 
-import { getServerSession } from 'next-auth';
 import { revalidateTag } from 'next/cache';
 
-import { authOptions } from '@/app/api/auth/[...nextauth]/route';
+import { verifySession } from '@/app/lib/session';
 import { authenticatedFetcher } from '@/services/fetcher';
 
 export async function createPropertyDocument(
   formData: FormData,
 ): Promise<void> {
-  const session = await getServerSession(authOptions);
+  const session = await verifySession();
   const propertyId = formData.get('propertyId')?.toString();
   if (!propertyId) return;
-  try {
-    await authenticatedFetcher(
-      `/property/${propertyId}/document`,
-      'POST',
-      session?.user.token,
-      formData,
-    );
-  } catch (error) {
-    console.log(error);
-  }
+  await authenticatedFetcher(
+    `/property/${propertyId}/document`,
+    'POST',
+    session?.user.token,
+    formData,
+  );
   revalidateTag('propertyDocuments');
 }
 
 export async function deletePropertyDocument(
   propertyDocumentId: number,
 ): Promise<void> {
-  const session = await getServerSession(authOptions);
-  try {
-    await authenticatedFetcher(
-      `/property/0/document/${propertyDocumentId}`,
-      'DELETE',
-      session?.user.token,
-      undefined,
-    );
-  } catch (error) {
-    console.log(error);
-  }
+  const session = await verifySession();
+
+  await authenticatedFetcher(
+    `/property/0/document/${propertyDocumentId}`,
+    'DELETE',
+    session?.user.token,
+    undefined,
+  );
   revalidateTag('propertyDocuments');
 }

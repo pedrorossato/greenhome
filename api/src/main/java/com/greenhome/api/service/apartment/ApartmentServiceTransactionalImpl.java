@@ -1,7 +1,7 @@
 package com.greenhome.api.service.apartment;
 
 import com.greenhome.api.dto.apartment.ApartmentDTO;
-import com.greenhome.api.dto.apartment.PostApartmentRequest;
+import com.greenhome.api.dto.apartment.SaveApartmentRequest;
 import com.greenhome.api.exception.NotFoundException;
 import com.greenhome.api.model.apartment.Apartment;
 import com.greenhome.api.model.property.Property;
@@ -38,9 +38,18 @@ public class ApartmentServiceTransactionalImpl implements ApartmentService {
     }
 
     @Override
-    public void save(PostApartmentRequest postApartmentRequest) {
-        Property property = propertyRepository.findById(postApartmentRequest.propertyId()).orElseThrow(() -> new NotFoundException("Empreendimento não encontrado"));
-        Apartment apartment = modelMapper.map(postApartmentRequest, Apartment.class);
+    public void create(SaveApartmentRequest saveApartmentRequest) {
+        Property property = propertyRepository.findById(saveApartmentRequest.propertyId()).orElseThrow(() -> new NotFoundException("Empreendimento não encontrado"));
+        Apartment apartment = modelMapper.map(saveApartmentRequest, Apartment.class);
+        apartment.setProperty(property);
+        apartmentRepository.save(apartment);
+    }
+
+    @Override
+    public void update(long id, SaveApartmentRequest saveApartmentRequest) {
+        Property property = propertyRepository.findById(saveApartmentRequest.propertyId()).orElseThrow(() -> new NotFoundException("Empreendimento não encontrado"));
+        Apartment apartment =  apartmentRepository.findById(id).orElseThrow(() -> new NotFoundException("Apartamento não encontrado"));
+        modelMapper.map(saveApartmentRequest, apartment);
         apartment.setProperty(property);
         apartmentRepository.save(apartment);
     }

@@ -1,10 +1,9 @@
 package com.greenhome.api.service.property;
 
 import com.amazonaws.services.s3.AmazonS3;
-import com.greenhome.api.dto.property.PostPropertyRequest;
+import com.greenhome.api.dto.property.SavePropertyRequest;
 import com.greenhome.api.dto.property.PropertyDTO;
-import com.greenhome.api.dto.property.PropertySummary;
-import com.greenhome.api.dto.property.PutPropertyRequest;
+import com.greenhome.api.dto.property.PropertySummaryDTO;
 import com.greenhome.api.enums.PropertyTypeEnum;
 import com.greenhome.api.exception.NotFoundException;
 import com.greenhome.api.model.property.Property;
@@ -37,6 +36,11 @@ public class PropertyServiceTransactionalImpl implements PropertyService {
     }
 
     @Override
+    public long count() {
+        return propertyRepository.count();
+    }
+
+    @Override
     public List<PropertyDTO> findAll() {
         List<Property> properties = propertyRepository.findAll();
         return properties.stream().map(property -> modelMapper.map(property, PropertyDTO.class)).toList();
@@ -60,31 +64,31 @@ public class PropertyServiceTransactionalImpl implements PropertyService {
     }
 
     @Override
-    public List<PropertySummary> findAllSummary() {
-        List<PropertySummary> properties = propertyRepository.findAllSummary();
-        properties.forEach(propertySummary -> propertySummary.setCoverDocumentUrl(amazonS3.getUrl(propertyDocumentBucket, propertySummary.getDocumentUUID().toString()).toString()));
+    public List<PropertySummaryDTO> findAllSummary() {
+        List<PropertySummaryDTO> properties = propertyRepository.findAllSummary();
+        properties.forEach(propertySummaryDTO -> propertySummaryDTO.setCoverDocumentUrl(amazonS3.getUrl(propertyDocumentBucket, propertySummaryDTO.getDocumentUUID().toString()).toString()));
         return properties;
     }
 
     @Override
-    public void save(PostPropertyRequest postPropertyRequest) {
-        Property property = mapToProperty(postPropertyRequest);
-        property.setTag(postPropertyRequest.name().toLowerCase().trim().replace(" ", "-"));
+    public void create(SavePropertyRequest savePropertyRequest) {
+        Property property = mapToProperty(savePropertyRequest);
+        property.setTag(savePropertyRequest.name().toLowerCase().trim().replace(" ", "-"));
         propertyRepository.save(property);
     }
 
-    private Property mapToProperty(PostPropertyRequest postPropertyRequest) {
+    private Property mapToProperty(SavePropertyRequest savePropertyRequest) {
         Property property;
-        if (PropertyTypeEnum.BUILDING.equals(postPropertyRequest.type())) {
-            property = modelMapper.map(postPropertyRequest, Building.class);
+        if (PropertyTypeEnum.BUILDING.equals(savePropertyRequest.type())) {
+            property = modelMapper.map(savePropertyRequest, Building.class);
         } else {
-            property = modelMapper.map(postPropertyRequest, Property.class);
+            property = modelMapper.map(savePropertyRequest, Property.class);
         }
         return property;
     }
 
     @Override
-    public void update(long id, PutPropertyRequest putPropertyRequest) {
+    public void update(long id, SavePropertyRequest putPropertyRequest) {
         Property property = propertyRepository.findById(id).orElseThrow(() -> new NotFoundException("Empreendimento não encontrado."));
         modelMapper.map(putPropertyRequest, property);
         property.setTag(putPropertyRequest.name().toLowerCase().trim().replace(" ", "-"));

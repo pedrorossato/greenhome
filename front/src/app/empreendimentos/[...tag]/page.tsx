@@ -10,6 +10,11 @@ import type Building from '@/types/properties/building/building';
 import { type PropertyDocument } from '@/types/properties/document/property-document';
 import { PropertyDocumentType } from '@/types/properties/document/property-document-type';
 import { type Property } from '@/types/properties/property';
+import {
+  PropertyStatus,
+  PropertyStatusColor,
+  PropertyStatusLabel,
+} from '@/types/properties/property-status';
 import { PropertyType } from '@/types/properties/property-type';
 import { BedDouble, RulerIcon } from 'lucide-react';
 
@@ -101,6 +106,10 @@ export default async function PropertyPage({
       ? (property as Building)
       : undefined;
 
+  const estimatedReleaseDate = building?.estimatedReleaseDate
+    ? new Date(building.estimatedReleaseDate.toString())
+    : undefined;
+
   return (
     <main className="text-justify">
       <section className="relative py-48">
@@ -114,14 +123,29 @@ export default async function PropertyPage({
         <div className="container relative z-10 flex flex-wrap items-center justify-start text-white">
           <h1 className="w-full text-6xl py-4">{property.name}</h1>
           <div className="flex flex-col gap-2">
+            <p>{PropertyStatusLabel.get(property.status)}</p>
+            {estimatedReleaseDate &&
+            property.status === PropertyStatus.CONSTRUCTION &&
+            estimatedReleaseDate.getTime() > new Date().getTime() ? (
+              <div>
+                <p>
+                  Previsão de entrega:{' '}
+                  {`${
+                    estimatedReleaseDate.getMonth() + 1
+                  }/${estimatedReleaseDate.getFullYear()}`}
+                </p>
+              </div>
+            ) : (
+              <></>
+            )}
             <div className="flex flex-row">
-              <RulerIcon className="mx-2" />
+              <RulerIcon className="mr-2" />
               <p>
                 {minArea}m<sup>2</sup> a {maxArea}m<sup>2</sup>
               </p>
             </div>
             <div className="flex flex-row">
-              <BedDouble className="mx-2" />
+              <BedDouble className="mr-2" />
               <p>
                 {minBedroomCount} a {maxBedroomCount} quartos
               </p>
@@ -129,7 +153,7 @@ export default async function PropertyPage({
           </div>
         </div>
       </section>
-      <section className="container flex flex-wrap items-center justify-center py-14">
+      <section className="container flex flex-wrap items-center justify-center py-8">
         <p className="w-full mb-14">{property.description}</p>
         <div className="w-full h-96">
           <PropertyMapsComponent properties={[property]} />
@@ -138,7 +162,7 @@ export default async function PropertyPage({
 
       {building ? (
         <section className="container flex flex-col items-center">
-          <h2 className="text-4xl text-center pb-2">Progresso da obra</h2>
+          {/* <h2 className="text-4xl text-center pb-2">Progresso da obra</h2> */}
           <div className="flex flex-col justify-between mb-1 w-full">
             <span className="text-base font-medium  dark:text-white">
               Terraplanagem
@@ -236,8 +260,8 @@ export default async function PropertyPage({
       )}
       {building ? (
         <section className="container flex flex-col items-center py-8">
-          <h2 className="text-4xl pb-2 mb-4">Comodidades</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          {/* <h2 className="text-4xl pb-2 mb-4">Comodidades</h2> */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
             {building.centralGas ? (
               <div className="flex">
                 <Image width={64} alt="cetralgas" src={CentralGas} />

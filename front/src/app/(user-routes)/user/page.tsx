@@ -1,19 +1,16 @@
-import { getServerSession } from 'next-auth';
-
 import RedirectAdminPageButton from '@/components/button/redirect-admin-page-button';
-import SignOutButton from '@/components/button/sign-out-button';
 import { UserProfile } from '@/components/user-profile';
 
-import { authOptions } from '@/app/api/auth/[...nextauth]/route';
+import { verifySession } from '@/app/lib/session';
 
 export default async function UserPage(): Promise<JSX.Element> {
-  const session = await getServerSession(authOptions);
+  const session = await verifySession();
 
   if (!session) return <></>;
   return (
     <div className="container">
       <UserProfile.Root>
-        <UserProfile.Photo userId={session.user.id} />
+        <UserProfile.Photo imageUrl={session.user.image} />
         <UserProfile.Content>
           <h2 className="text-2xl">{session.user.name}</h2>
           <small>{session.user.email}</small>
@@ -23,7 +20,6 @@ export default async function UserPage(): Promise<JSX.Element> {
             ) : (
               <></>
             )}
-            <SignOutButton />
           </div>
         </UserProfile.Content>
       </UserProfile.Root>

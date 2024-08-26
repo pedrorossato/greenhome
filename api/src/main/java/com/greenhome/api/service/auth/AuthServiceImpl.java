@@ -30,6 +30,7 @@ public class AuthServiceImpl implements AuthService {
     private final AuthenticationManager authenticationManager;
     private final JwtService jwtService;
     private final AmazonS3 amazonS3;
+    private final String userPhotoBucket;
     private final ModelMapper modelMapper;
     private final Logger log = LoggerFactory.getLogger(AuthServiceImpl.class);
     
@@ -37,8 +38,9 @@ public class AuthServiceImpl implements AuthService {
             UserService userService,
             PasswordEncoder passwordEncoder,
             AuthenticationManager authenticationManager,
-            JwtService jwtService, 
-            AmazonS3 amazonS3,
+            JwtService jwtService,
+            AmazonS3 amazonS3, 
+            String userPhotoBucket,
             ModelMapper modelMapper
     ) {
         this.userService = userService;
@@ -46,6 +48,7 @@ public class AuthServiceImpl implements AuthService {
         this.authenticationManager = authenticationManager;
         this.jwtService = jwtService;
         this.amazonS3 = amazonS3;
+        this.userPhotoBucket = userPhotoBucket;
         this.modelMapper = modelMapper;
     }
 
@@ -86,6 +89,7 @@ public class AuthServiceImpl implements AuthService {
         UserDTO userDTO = modelMapper.map(user, UserDTO.class);
         userDTO.setRoles(user.getAuthorities().stream().map(GrantedAuthority::getAuthority).toArray(String[]::new));
         userDTO.setToken(jwtService.generateToken(user));
+        userDTO.setImage(amazonS3.getUrl(userPhotoBucket, user.getPhotoUUID().toString()).toString());
         authenticationResponse.setUser(userDTO);
         return authenticationResponse;
     }

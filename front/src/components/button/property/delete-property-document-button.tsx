@@ -3,7 +3,7 @@
 import { deletePropertyDocument } from '@/app/actions/properties/documents/actions';
 import { TrashIcon } from 'lucide-react';
 
-import { Button } from '../ui/button';
+import { Button } from '../../ui/button';
 
 export default function DeletePropertyDocumentButton({
   propertyDocumentId,

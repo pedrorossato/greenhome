@@ -112,7 +112,6 @@ export const columns: Array<ColumnDef<Property>> = [
               <DropdownMenuLabel>Opções</DropdownMenuLabel>
               <DropdownMenuItem
                 onClick={async () => {
-                  console.log(property.type);
                   const url =
                     property.type === PropertyType.BUILDING
                       ? window.location.hostname +

@@ -5,7 +5,9 @@ import com.greenhome.api.enums.PropertyTypeEnum;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
-public record PutPropertyRequest(
+import java.util.Date;
+
+public record SavePropertyRequest(
         @NotNull @NotBlank(message = "Nome deve ser preenchido")
         String name,
         @NotNull @NotBlank(message = "Endereço deve ser preenchido")
@@ -43,6 +45,7 @@ public record PutPropertyRequest(
         boolean elevator,
         boolean bicycleStand,
         boolean partyHall,
-        boolean playground
+        boolean playground,
+        Date estimatedReleaseDate
 ) {
 }

@@ -6,6 +6,14 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from '@/components/ui/carousel';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog';
 
 import { type PropertyDocument } from '@/types/properties/document/property-document';
 
@@ -17,21 +25,7 @@ export default function PropertyDocumentCarousel({
   documents,
 }: PropertyDocumentCarouselProps): JSX.Element {
   if (documents.length === 0) {
-    return (
-      <Carousel>
-        <CarouselContent>
-          <CarouselItem>
-            <Card>
-              <CardContent>
-                <p>Sem conteúdo</p>
-              </CardContent>
-            </Card>
-          </CarouselItem>
-        </CarouselContent>
-        <CarouselPrevious />
-        <CarouselNext />
-      </Carousel>
-    );
+    return <p>Sem conteúdo</p>;
   }
   return (
     <Carousel className="w-1/2">
@@ -40,11 +34,22 @@ export default function PropertyDocumentCarousel({
           <CarouselItem key={doc.documentUUID}>
             <Card>
               <CardContent>
-                <img
-                  className="object-cover"
-                  alt={doc.id.toString()}
-                  src={doc.url}
-                />
+                <Dialog modal>
+                  <DialogTrigger>
+                    <img
+                      className="object-cover"
+                      alt={doc.id.toString()}
+                      src={doc.url}
+                    />
+                  </DialogTrigger>
+                  <DialogContent className="w-full max-w-4xl p-0">
+                    <img
+                      className="w-full h-full object-contain"
+                      alt={doc.id.toString()}
+                      src={doc.url}
+                    />
+                  </DialogContent>
+                </Dialog>
               </CardContent>
             </Card>
           </CarouselItem>

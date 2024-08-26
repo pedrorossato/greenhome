@@ -15,14 +15,17 @@ import { MoreHorizontal } from 'lucide-react';
 export const columns: Array<ColumnDef<Apartment>> = [
   {
     accessorKey: 'name',
-    header: 'Nome',
+    header: () => <div className="text-left">Nome</div>,
+    cell: ({ row }) => {
+      return <div className="text-left">{row.original.name}</div>;
+    },
   },
   {
     accessorKey: 'area',
     header: 'Área',
     cell: ({ row }) => {
       return (
-        <div className="text-right">
+        <div className="text-center">
           {row.original.area}m<sup>2</sup>
         </div>
       );
@@ -32,19 +35,19 @@ export const columns: Array<ColumnDef<Apartment>> = [
     accessorKey: 'bedroomCount',
     header: 'Quartos',
     cell: ({ row }) => {
-      return <div className="text-right">{row.original.bedroomCount}</div>;
+      return <div className="text-center">{row.original.bedroomCount}</div>;
     },
   },
   {
     accessorKey: 'bathroomCount',
     header: 'Banheiros',
     cell: ({ row }) => {
-      return <div className="text-right">{row.original.bathroomCount}</div>;
+      return <div className="text-center">{row.original.bathroomCount}</div>;
     },
   },
   {
     accessorKey: 'actions',
-    header: 'Ações',
+    header: () => <div className="text-right">Ações</div>,
     cell: ({ row }) => {
       const apartment = row.original;
 

@@ -1,8 +1,8 @@
 import Image from 'next/image';
-import { FaFacebook, FaInstagram, FaPhoneAlt } from 'react-icons/fa';
+import { FaFacebook, FaInstagram, FaWhatsapp } from 'react-icons/fa';
 import { GoMail } from 'react-icons/go';
 
-export default function Footer(): JSX.Element {
+export default async function Footer(): Promise<JSX.Element> {
   return (
     <footer className="w-full bg-black text-white">
       <div className="container pt-5 flex flex-wrap items-center justify-center">
@@ -21,7 +21,7 @@ export default function Footer(): JSX.Element {
         </div>
         <div className="w-full md:w-1/2 flex flex-col items-center justify-center">
           <div className="flex flex-row items-center justify-center">
-            <FaPhoneAlt className="mr-1" />
+            <FaWhatsapp size={25} className="mr-1" />
             <p>(55) 99953-1120</p>
           </div>
           <div className="flex flex-row items-center justify-center">
@@ -42,7 +42,10 @@ export default function Footer(): JSX.Element {
             Copyright © {new Date().getFullYear()} - Todos os direitos
             reservados.
             <br />
-            <small>Desenvolvido por @Pedro</small>
+            <small>
+              Desenvolvido por{' '}
+              <a href="https://www.linkedin.com/in/phvrossato/">@Pedro</a>
+            </small>
           </p>
         </div>
       </div>

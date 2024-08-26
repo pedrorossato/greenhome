@@ -1,10 +1,12 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 
 import { Button } from '@/components/ui/button';
+import { Calendar } from '@/components/ui/calendar';
 import {
   Form,
   FormControl,
@@ -40,12 +42,13 @@ export default function BuildingForm({
   const form = useForm<Building>({
     defaultValues: building ?? {},
   });
-  const { register, control } = form;
+  const { register, control, watch } = form;
   const router = useRouter();
-
+  const estimatedReleaseDate = watch('estimatedReleaseDate');
   const handleAction = building
     ? async (formData: FormData) => {
         try {
+          formData.append('estimatedReleaseDate', estimatedReleaseDate ?? '');
           await editProperty(formData);
           toast.success('Prédio editado com sucesso');
           router.push('/admin');
@@ -55,6 +58,7 @@ export default function BuildingForm({
       }
     : async (formData: FormData) => {
         try {
+          formData.append('estimatedReleaseDate', estimatedReleaseDate ?? '');
           await createProperty(formData);
           toast.success('Prédio adicionado com sucesso');
           router.push('/admin');
@@ -132,6 +136,29 @@ export default function BuildingForm({
                 </Select>
               </FormControl>
               <FormMessage />
+            </FormItem>
+          )}
+        ></FormField>
+        <FormField
+          control={control}
+          name="estimatedReleaseDate"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Data estimada de entrega</FormLabel>
+              <FormDescription>
+                O dia não será exibido, somente mês e ano
+              </FormDescription>
+              <FormControl>
+                <Calendar
+                  mode="single"
+                  selected={new Date(field.value ?? '')}
+                  onSelect={(date) => {
+                    field.onChange(date?.toISOString());
+                  }}
+                  className="rounded-md"
+                  {...register('estimatedReleaseDate')}
+                />
+              </FormControl>
             </FormItem>
           )}
         ></FormField>

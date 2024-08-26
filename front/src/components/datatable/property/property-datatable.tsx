@@ -1,6 +1,6 @@
 'use client';
 
-import AddPropertyButton from '@/components/button/add-property-button';
+import AddPropertyButton from '@/components/button/property/add-property-button';
 import { DataTable } from '@/components/ui/data-table';
 
 import { type Property } from '@/types/properties/property';
