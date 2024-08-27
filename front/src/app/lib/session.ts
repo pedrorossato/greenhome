@@ -21,6 +21,9 @@ export async function decrypt(
   session: string | undefined = '',
 ): Promise<JWTPayload | undefined> {
   try {
+    console.log(secretKey);
+    console.log(encodedKey);
+
     const { payload } = await jwtVerify(session, encodedKey, {
       algorithms: ['HS256'],
     });
