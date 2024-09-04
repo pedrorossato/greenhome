@@ -11,8 +11,8 @@ export default async function AdminPage(): Promise<JSX.Element> {
   if (!session) return <></>;
 
   const [posts, properties] = await Promise.all([
-    fetcher<Post[]>('/post', 'GET', undefined, ['posts']),
-    fetcher<Property[]>('/property', 'GET', undefined, ['properties']),
+    fetcher<Post[]>('/post', 'GET'),
+    fetcher<Property[]>('/property', 'GET'),
   ]);
 
   return (

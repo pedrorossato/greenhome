@@ -23,8 +23,6 @@ export default async function PropertyDocumentsPage({
   const propertyDocuments = await fetcher<PropertyDocument[]>(
     `/property/${propertyId}/document`,
     'GET',
-    undefined,
-    ['propertyDocuments', `${propertyId}`],
   );
   return (
     <div className="container flex flex-col justify-center items-center">

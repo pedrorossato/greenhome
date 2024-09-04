@@ -16,7 +16,6 @@ export async function signin(formData: FormData): Promise<void> {
     '/auth/authenticate',
     'POST',
     JSON.stringify({ email, password }),
-    undefined,
     'application/json',
   );
 

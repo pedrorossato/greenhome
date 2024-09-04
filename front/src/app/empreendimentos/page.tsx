@@ -7,8 +7,6 @@ export default async function PropertiesPage(): Promise<JSX.Element> {
   const properties = await fetcher<PropertySummary[]>(
     '/property/summary',
     'GET',
-    undefined,
-    ['properties'],
   );
 
   return (

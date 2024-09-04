@@ -20,9 +20,7 @@ import backgroundSM from '../../public/fundoSM.png';
 import Folder1 from '../../public/mainlogogreen.png';
 
 export default async function Home(): Promise<JSX.Element> {
-  const properties = await fetcher<Property[]>('/property', 'GET', undefined, [
-    'properties',
-  ]);
+  const properties = await fetcher<Property[]>('/property', 'GET');
 
   const constructionCount = properties.filter(
     (p) => p.status === PropertyStatus.CONSTRUCTION,

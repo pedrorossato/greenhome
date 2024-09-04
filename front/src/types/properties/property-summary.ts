@@ -9,7 +9,7 @@ export default interface PropertySummary {
   maxArea: number;
   minBedroomCount: number;
   maxBedroomCount: number;
-  type: PropertyType;
+  // type: PropertyType;
   documentUUID: string;
   coverDocumentUrl: string;
 }

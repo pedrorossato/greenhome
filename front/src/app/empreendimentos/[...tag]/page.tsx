@@ -32,26 +32,19 @@ export default async function PropertyPage({
     tag: string;
   };
 }): Promise<JSX.Element> {
-  const property = await fetcher<Property>(
-    `/property/${params.tag}`,
-    'GET',
-    undefined,
-    ['properties'],
-  );
+  const property = await fetcher<Property>(`/property/${params.tag}`, 'GET');
 
   const [documents, apartments] = await Promise.all([
     fetcher<PropertyDocument[]>(
       `/property/${property.id}/document`,
       'GET',
       undefined,
-      ['propertyDocuments'],
     ),
     property.type === PropertyType.BUILDING
       ? fetcher<Apartment[]>(
           `/property/${property.id}/apartment`,
           'GET',
           undefined,
-          ['apartments', `${property.id}`],
         )
       : Promise.resolve(undefined),
   ]);

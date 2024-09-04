@@ -9,18 +9,11 @@ export default async function AdminBuildingApartments({
 }: {
   params: { tag: string };
 }): Promise<JSX.Element> {
-  const property = await fetcher<Property>(
-    `/property/${params.tag}`,
-    'GET',
-    undefined,
-    ['properties'],
-  );
+  const property = await fetcher<Property>(`/property/${params.tag}`, 'GET');
 
   const apartments = await fetcher<Apartment[]>(
     `/property/${property.id}/apartment`,
     'GET',
-    undefined,
-    ['apartments', `${property.id}`],
   );
 
   return (

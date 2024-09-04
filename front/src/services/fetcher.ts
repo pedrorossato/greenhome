@@ -2,7 +2,6 @@ export const fetcher = async <T>(
   url: string,
   method: string,
   body?: BodyInit,
-  tags?: string[],
   contentType?: string,
 ): Promise<T> => {
   const requestHeaders: HeadersInit = {};
@@ -14,8 +13,7 @@ export const fetcher = async <T>(
   const response = await fetch(process.env.NEXT_PUBLIC_API_URL + url, {
     method,
     body,
-    cache: tags ? undefined : 'no-cache',
-    next: tags ? { tags, revalidate: 3600 } : undefined,
+    cache: 'no-cache',
     headers: requestHeaders,
   });
 
