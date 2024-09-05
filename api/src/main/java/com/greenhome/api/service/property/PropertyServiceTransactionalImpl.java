@@ -66,7 +66,11 @@ public class PropertyServiceTransactionalImpl implements PropertyService {
     @Override
     public List<PropertySummaryDTO> findAllSummary() {
         List<PropertySummaryDTO> properties = propertyRepository.findAllSummary();
-        properties.forEach(propertySummaryDTO -> propertySummaryDTO.setCoverDocumentUrl(amazonS3.getUrl(propertyDocumentBucket, propertySummaryDTO.getDocumentUUID().toString()).toString()));
+        properties.forEach(propertySummaryDTO -> {
+                if (propertySummaryDTO.getDocumentUUID() == null) return;
+                propertySummaryDTO.setCoverDocumentUrl(amazonS3.getUrl(propertyDocumentBucket, propertySummaryDTO.getDocumentUUID().toString()).toString());
+            }
+        );
         return properties;
     }
 

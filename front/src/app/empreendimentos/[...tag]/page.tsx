@@ -1,8 +1,10 @@
-import Image from 'next/image';
+import { FaMapMarker } from 'react-icons/fa';
+import { GiCrane } from 'react-icons/gi';
 
 import PropertyDocumentCarousel from '@/components/carousel/property-document/propert-document-carousel';
 import { PropertyMapsComponent } from '@/components/maps/property';
 import ApartmentTable from '@/components/table/apartment/apartment-table';
+import BuildingAmenities from '@/components/ui/building/property-amenities';
 
 import { fetcher } from '@/services/fetcher';
 import type Apartment from '@/types/apartments/apartment';
@@ -16,14 +18,6 @@ import {
 } from '@/types/properties/property-status';
 import { PropertyType } from '@/types/properties/property-type';
 import { BedDouble, RulerIcon } from 'lucide-react';
-
-import EletronicGate from '../../../../public/eletronicgate.png';
-import Elevator from '../../../../public/elevator.png';
-import EntranceHall from '../../../../public/entrancehall.png';
-import CentralGas from '../../../../public/gascentral.png';
-import Gym from '../../../../public/gym.png';
-import Intercom from '../../../../public/intercom.png';
-import SplitACWaiting from '../../../../public/splitACWaiting.png';
 
 export default async function PropertyPage({
   params,
@@ -115,7 +109,14 @@ export default async function PropertyPage({
         <div className="container relative z-10 flex flex-wrap items-center justify-start text-white">
           <h1 className="w-full text-6xl py-4">{property.name}</h1>
           <div className="flex flex-col gap-2">
-            <p>{PropertyStatusLabel.get(property.status)}</p>
+            <div className="flex flex-row">
+              <FaMapMarker className="mr-2" />
+              <p>{property.address}</p>
+            </div>
+            <div className="flex flex-row">
+              <GiCrane className="mr-2" />
+              <p>{PropertyStatusLabel.get(property.status)}</p>
+            </div>
             {estimatedReleaseDate &&
             property.status === PropertyStatus.CONSTRUCTION &&
             estimatedReleaseDate.getTime() > new Date().getTime() ? (
@@ -146,11 +147,17 @@ export default async function PropertyPage({
         </div>
       </section>
       <section className="container flex flex-wrap items-center justify-center py-8">
-        <p className="w-full mb-14">{property.description}</p>
-        <div className="w-full h-96">
-          <PropertyMapsComponent properties={[property]} />
-        </div>
+        <p className="w-full">{property.description}</p>
       </section>
+      {building ? (
+        <section className="container flex flex-col items-center py-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+            <BuildingAmenities building={building} />
+          </div>
+        </section>
+      ) : (
+        <></>
+      )}
 
       {building ? (
         <section className="container flex flex-col items-center">
@@ -250,114 +257,13 @@ export default async function PropertyPage({
       ) : (
         <></>
       )}
-      {building ? (
-        <section className="container flex flex-col items-center py-8">
-          {/* <h2 className="text-4xl pb-2 mb-4">Comodidades</h2> */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-            {building.centralGas ? (
-              <div className="flex">
-                <Image width={64} alt="cetralgas" src={CentralGas} />
-                <div>
-                  <h2 className="text-2xl">Gás Central</h2>
-                  <p>Com medidores individuais</p>
-                </div>
-              </div>
-            ) : (
-              <></>
-            )}
-            {building.elevator ? (
-              <div className="flex">
-                <Image
-                  className="mr-2"
-                  width={64}
-                  alt="elevator"
-                  src={Elevator}
-                />
-                <div>
-                  <h2 className="text-2xl">Elevador</h2>
-                  <p>Para maior comodidade</p>
-                </div>
-              </div>
-            ) : (
-              <></>
-            )}
-            {building.entranceHall ? (
-              <div className="flex">
-                <Image
-                  className="mr-2"
-                  width={64}
-                  alt="entranceHall"
-                  src={EntranceHall}
-                />
-                <div>
-                  <h2 className="text-2xl">Hall de entrada</h2>
-                  <p>Belo e seguro</p>
-                </div>
-              </div>
-            ) : (
-              <></>
-            )}
-            {building.gym ? (
-              <div className="flex">
-                <Image className="mr-2" width={64} alt="gym" src={Gym} />
-                <div>
-                  <h2 className="text-2xl">Academia</h2>
-                </div>
-              </div>
-            ) : (
-              <></>
-            )}
-            {building.eletronicGate ? (
-              <div className="flex">
-                <Image
-                  className="mr-2"
-                  width={64}
-                  alt="eletronicGate"
-                  src={EletronicGate}
-                />
-                <div>
-                  <h2 className="text-2xl">Portão eletrônico</h2>
-                  <p>Nas garagens</p>
-                </div>
-              </div>
-            ) : (
-              <></>
-            )}
-            {building.intercom ? (
-              <div className="flex">
-                <Image
-                  className="mr-2"
-                  width={64}
-                  alt="intercom"
-                  src={Intercom}
-                />
-                <div>
-                  <h2 className="text-2xl">Interfones</h2>
-                </div>
-              </div>
-            ) : (
-              <></>
-            )}
-            {building.splitACWaiting ? (
-              <div className="flex">
-                <Image
-                  className="mr-2"
-                  width={64}
-                  alt="splitACWaiting"
-                  src={SplitACWaiting}
-                />
-                <div>
-                  <h2 className="text-xl">Espera para A/C split</h2>
-                </div>
-              </div>
-            ) : (
-              <></>
-            )}
-          </div>
-        </section>
-      ) : (
-        <></>
-      )}
+
+      <section className="container flex flex-wrap items-center justify-center py-8">
+        <div className="w-full h-96">
+          <PropertyMapsComponent properties={[property]} />
+        </div>
+      </section>
+
       <ApartmentTable apartments={apartments} />
       <section className="container flex flex-col items-center justify-center py-4">
         <h1 className="text-4xl">Plantas Humanizadas</h1>

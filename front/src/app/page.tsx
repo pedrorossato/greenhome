@@ -162,8 +162,8 @@ export default async function Home(): Promise<JSX.Element> {
             <div className="w-full md:w-1/3 flex flex-col justify-center items-center">
               <FaRegBuilding size={50} />
               <h1 className="text-4xl">{finishedCount}</h1>
-              empreendimento{constructionCount > 1 ? 's' : ''} finalizado
-              {constructionCount > 1 ? 's' : ''}
+              empreendimento{finishedCount > 1 ? 's' : ''} finalizado
+              {finishedCount > 1 ? 's' : ''}
             </div>
             <div className="w-full md:w-1/3 flex flex-col justify-center items-center">
               <FaRegClock size={50} />

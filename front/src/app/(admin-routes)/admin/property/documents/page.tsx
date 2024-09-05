@@ -129,7 +129,7 @@ export default async function PropertyDocumentsPage({
               .filter(
                 (doc) =>
                   PropertyDocumentType[doc.type] ===
-                  PropertyDocumentType.FLOOR_PLAN,
+                  PropertyDocumentType.GALLERY,
               )
               .map((doc) => (
                 <CarouselItem key={doc.documentUUID}>
