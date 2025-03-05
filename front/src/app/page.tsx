@@ -4,12 +4,6 @@ import { GiCrane } from 'react-icons/gi';
 
 import RedirectPropertiesPageButton from '@/components/button/property/redirect-properties-page-button';
 import { PropertyMapsComponent } from '@/components/maps/property/index';
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from '@/components/ui/accordion';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 import { fetcher } from '@/services/fetcher';
