@@ -114,6 +114,18 @@ export default async function PropertyPage({
               <p>{property.address}</p>
             </div>
             <div className="flex flex-row">
+              <RulerIcon className="mr-2" />
+              <p>
+                {minArea}m<sup>2</sup> a {maxArea}m<sup>2</sup>
+              </p>
+            </div>
+            <div className="flex flex-row">
+              <BedDouble className="mr-2" />
+              <p>
+                {minBedroomCount} a {maxBedroomCount} quartos
+              </p>
+            </div>
+            <div className="flex flex-row">
               <GiCrane className="mr-2" />
               <p>{PropertyStatusLabel.get(property.status)}</p>
             </div>
@@ -131,18 +143,6 @@ export default async function PropertyPage({
             ) : (
               <></>
             )}
-            <div className="flex flex-row">
-              <RulerIcon className="mr-2" />
-              <p>
-                {minArea}m<sup>2</sup> a {maxArea}m<sup>2</sup>
-              </p>
-            </div>
-            <div className="flex flex-row">
-              <BedDouble className="mr-2" />
-              <p>
-                {minBedroomCount} a {maxBedroomCount} quartos
-              </p>
-            </div>
           </div>
         </div>
       </section>

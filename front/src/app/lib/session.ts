@@ -64,11 +64,8 @@ export async function updateSession(): Promise<null | undefined> {
 
 export const verifySession = async (): Promise<Session | undefined> => {
   const cookie = cookies().get('session')?.value;
-  const jwtPayload = await decrypt(cookie);
+  const jwtPayload = cookie ? await decrypt(cookie) : undefined;
   const session = jwtPayload?.session as Session | undefined;
-  // if (!session?.user.id) {
-  //   redirect('/login');
-  // }
 
   return session;
 };

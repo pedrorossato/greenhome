@@ -17,7 +17,7 @@ export default function PropertyMaps({
     <MapContainer
       className="w-full h-full"
       center={[-29.704292, -53.718593]}
-      zoom={12}
+      zoom={14}
       scrollWheelZoom={false}
     >
       <TileLayer
