@@ -66,9 +66,12 @@ public class PropertyDocumentTransactionalImpl implements PropertyDocumentServic
     public void create(PostPropertyDocumentRequest postPropertyDocumentRequest) {
         Property property = propertyRepository.findById(postPropertyDocumentRequest.propertyId()).orElseThrow(() -> new NotFoundException("Property not found"));
         PropertyDocument propertyDocument = modelMapper.map(postPropertyDocumentRequest, PropertyDocument.class);
+        propertyDocument.setId(0L);
         propertyDocument.setProperty(property);
         propertyDocument.setDocumentUUID(UUID.randomUUID());
         propertyDocumentRepository.save(propertyDocument);
+        property.getPropertyDocumentList().add(propertyDocument);
+        propertyRepository.save(property);
         try {
             File file = FileUtils.convertMultiPartToFile(postPropertyDocumentRequest.document());
             amazonS3.putObject(propertyDocumentBucket, propertyDocument.getDocumentUUID().toString(), file);

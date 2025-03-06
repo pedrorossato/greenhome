@@ -1,0 +1,26 @@
+package com.greenhome.api.config;
+
+import com.oracle.bmc.ConfigFileReader;
+import com.oracle.bmc.auth.ConfigFileAuthenticationDetailsProvider;
+import com.oracle.bmc.objectstorage.ObjectStorage;
+import com.oracle.bmc.objectstorage.ObjectStorageClient;
+import org.springframework.context.annotation.Configuration;
+
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
+@Configuration
+public class OSClientConfiguration {
+    
+    String configurationFilePath = "~/.oci/config";
+    
+    String profile = "DEFAULT";
+    
+    public ObjectStorage osClient() throws IOException {
+        Path path = Paths.get(configurationFilePath);
+        final ConfigFileReader.ConfigFile configFileReader = ConfigFileReader.parse(path.toAbsolutePath() + configurationFilePath, profile);
+        final ConfigFileAuthenticationDetailsProvider provider = new ConfigFileAuthenticationDetailsProvider(configFileReader);
+        return ObjectStorageClient.builder().region().build(provider);
+    }
+}

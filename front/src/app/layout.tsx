@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
+import { Open_Sans } from 'next/font/google';
 import React from 'react';
 import { ToastContainer } from 'react-toastify';
 
@@ -9,7 +9,10 @@ import './globals.css';
 import 'react-toastify/dist/ReactToastify.css';
 import { UserProfile } from '@/components/user-profile';
 
-const inter = Inter({ subsets: ['latin'] });
+const openSans = Open_Sans({
+  weight: '400',
+  subsets: ['latin'],
+});
 
 export const metadata: Metadata = {
   title: 'Green Home Construtora e Incorporadora LTDA.',
@@ -23,7 +26,7 @@ export default async function RootLayout({
 }): Promise<JSX.Element> {
   return (
     <html lang="en">
-      <body className={`${inter.className} `}>
+      <body className={`${openSans.className}`}>
         <Navbar>
           <UserProfile.Anchor />
         </Navbar>
