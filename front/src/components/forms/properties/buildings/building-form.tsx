@@ -30,6 +30,7 @@ import { createProperty, editProperty } from '@/app/actions/properties/actions';
 import type Building from '@/types/properties/building/building';
 import { PropertyStatus } from '@/types/properties/property-status';
 import { PropertyType } from '@/types/properties/property-type';
+import { ptBR } from 'date-fns/locale';
 
 interface PropertyFormProps {
   building?: Building;
@@ -150,6 +151,7 @@ export default function BuildingForm({
               <FormControl>
                 <Calendar
                   mode="single"
+                  locale={ptBR}
                   selected={new Date(field.value ?? '')}
                   onSelect={(date) => {
                     field.onChange(date?.toISOString());

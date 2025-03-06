@@ -4,6 +4,7 @@ import com.greenhome.api.dto.apartment.ApartmentDTO;
 import com.greenhome.api.dto.apartment.SaveApartmentRequest;
 import com.greenhome.api.exception.NotFoundException;
 import com.greenhome.api.model.apartment.Apartment;
+import com.greenhome.api.model.building.Building;
 import com.greenhome.api.model.property.Property;
 import com.greenhome.api.repository.apartment.ApartmentRepository;
 import com.greenhome.api.repository.property.PropertyRepository;
@@ -41,7 +42,7 @@ public class ApartmentServiceTransactionalImpl implements ApartmentService {
     public void create(SaveApartmentRequest saveApartmentRequest) {
         Property property = propertyRepository.findById(saveApartmentRequest.propertyId()).orElseThrow(() -> new NotFoundException("Empreendimento não encontrado"));
         Apartment apartment = modelMapper.map(saveApartmentRequest, Apartment.class);
-        apartment.setProperty(property);
+        apartment.setProperty((Building) property);
         apartmentRepository.save(apartment);
     }
 
@@ -50,7 +51,7 @@ public class ApartmentServiceTransactionalImpl implements ApartmentService {
         Property property = propertyRepository.findById(saveApartmentRequest.propertyId()).orElseThrow(() -> new NotFoundException("Empreendimento não encontrado"));
         Apartment apartment =  apartmentRepository.findById(id).orElseThrow(() -> new NotFoundException("Apartamento não encontrado"));
         modelMapper.map(saveApartmentRequest, apartment);
-        apartment.setProperty(property);
+        apartment.setProperty((Building) property);
         apartmentRepository.save(apartment);
     }
 

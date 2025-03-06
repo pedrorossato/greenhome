@@ -75,7 +75,7 @@ export default function Navbar({
                   {NavbarLinks.map((nav, index) => (
                     <li
                       key={nav.id}
-                      className={`font-poppins font-medium cursor-pointer text-[16px] text-black ${
+                      className={`w-full font-poppins font-medium cursor-pointer text-[16px] text-black ${
                         pathname === nav.id
                           ? 'border-b-2 border-primary-blue'
                           : ''

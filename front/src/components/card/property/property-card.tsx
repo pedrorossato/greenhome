@@ -28,7 +28,10 @@ export default function PropertyCard({
       key={property.tag}
     >
       <div>
-        <img src={`${property.coverDocumentUrl}`} alt="prop" />
+        <img
+          src={`${property.coverDocumentUrl}`}
+          alt={property.name + ' logo'}
+        />
         <div className="flex flex-col p-3">
           <div className="flex flex-row justify-between items-center">
             <h1 className="text-2xl font-semibold">{property.name}</h1>

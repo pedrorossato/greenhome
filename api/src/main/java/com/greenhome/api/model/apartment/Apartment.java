@@ -1,8 +1,11 @@
 package com.greenhome.api.model.apartment;
 
+import com.greenhome.api.model.building.Building;
 import com.greenhome.api.model.property.Property;
 import jakarta.persistence.*;
 import lombok.Data;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 @Data
 @Entity
@@ -17,7 +20,7 @@ public class Apartment {
     
     @JoinColumn(name = "property_id")
     @ManyToOne
-    private Property property;
+    private Building property;
     
     private double area;
     

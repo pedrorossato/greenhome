@@ -1,14 +1,13 @@
 package com.greenhome.api.model.building;
 
+import com.greenhome.api.model.apartment.Apartment;
 import com.greenhome.api.model.property.Property;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.PrimaryKeyJoinColumn;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import java.util.Date;
+import java.util.List;
 
 @Data
 @Entity
@@ -51,4 +50,7 @@ public class Building extends Property {
     private boolean playground;
     
     private Date estimatedReleaseDate;
+
+    @OneToMany(mappedBy = "property", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Apartment> apartments;
 }
