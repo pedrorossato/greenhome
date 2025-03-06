@@ -24,6 +24,11 @@ export async function signin(formData: FormData): Promise<void> {
   redirect('/user');
 }
 
+export async function register(formData: FormData): Promise<void> {
+  await fetcher('/auth/register', 'POST', formData);
+  redirect('/login');
+}
+
 export async function logout(): Promise<void> {
   deleteSession();
   redirect('/login');

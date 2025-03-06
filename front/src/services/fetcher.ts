@@ -19,8 +19,7 @@ export const fetcher = async <T>(
 
   if (!response.ok) {
     const error = await response.text();
-    console.log(error);
-    return null as T;
+    throw new Error(error);
   }
 
   const responseContentType = response.headers.get('Content-Type');

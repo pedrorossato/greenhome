@@ -1,13 +1,14 @@
 'use client';
 
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { GoPerson } from 'react-icons/go';
 import { MdOutlineAlternateEmail } from 'react-icons/md';
 import { RiLockPasswordLine } from 'react-icons/ri';
 import { toast } from 'react-toastify';
+
+import { register as registerAction } from '@/app/actions/auth/auth';
 
 interface RegisterFormValues {
   name: string;
@@ -18,7 +19,6 @@ interface RegisterFormValues {
 export default function RegisterForm(): JSX.Element {
   const { handleSubmit, register } = useForm<RegisterFormValues>();
   const [loading, setLoading] = useState(false);
-  const router = useRouter();
 
   const onSubmit = handleSubmit(async (data) => {
     const formData = new FormData();
@@ -27,24 +27,15 @@ export default function RegisterForm(): JSX.Element {
     formData.append('password', data.password);
     formData.append('photo', data.photo[0]);
 
-    setLoading(true);
-    const response = await fetch(
-      process.env.NEXT_PUBLIC_API_URL + '/auth/register',
-      {
-        method: 'POST',
-        body: formData,
-      },
-    );
-    setLoading(false);
-
-    if (!response.ok) {
-      const error = await response.json();
-      toast.error(error as string);
-      return;
+    try {
+      setLoading(true);
+      await registerAction(formData);
+      toast.success('Registrado com sucesso.');
+    } catch (error: any) {
+      toast.error('Erro ao registrar: ' + error.message);
+    } finally {
+      setLoading(false);
     }
-
-    toast.success('Registrado com sucesso.');
-    router.push('/login');
   });
 
   return (
