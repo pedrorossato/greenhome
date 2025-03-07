@@ -1,14 +1,14 @@
 'use client';
 
 import Link from 'next/link';
-import { useState } from 'react';
+import { useTransition } from 'react';
 import { useForm } from 'react-hook-form';
 import { GoPerson } from 'react-icons/go';
 import { MdOutlineAlternateEmail } from 'react-icons/md';
 import { RiLockPasswordLine } from 'react-icons/ri';
 import { toast } from 'react-toastify';
 
-import { register as registerAction } from '@/app/actions/auth/auth';
+import { register as registerAction } from '@/app/actions/auth/actions';
 
 interface RegisterFormValues {
   name: string;
@@ -18,24 +18,24 @@ interface RegisterFormValues {
 }
 export default function RegisterForm(): JSX.Element {
   const { handleSubmit, register } = useForm<RegisterFormValues>();
-  const [loading, setLoading] = useState(false);
+  const [isPending, startTransition] = useTransition();
 
   const onSubmit = handleSubmit(async (data) => {
-    const formData = new FormData();
-    formData.append('name', data.name);
-    formData.append('email', data.email);
-    formData.append('password', data.password);
-    formData.append('photo', data.photo[0]);
+    if (isPending) return;
+    startTransition(async () => {
+      const formData = new FormData();
+      formData.append('name', data.name);
+      formData.append('email', data.email);
+      formData.append('password', data.password);
+      formData.append('photo', data.photo[0]);
 
-    try {
-      setLoading(true);
-      await registerAction(formData);
-      toast.success('Registrado com sucesso.');
-    } catch (error: any) {
-      toast.error('Erro ao registrar: ' + error.message);
-    } finally {
-      setLoading(false);
-    }
+      try {
+        await registerAction(formData);
+        toast.success('Registrado com sucesso.');
+      } catch (error: any) {
+        toast.error('Erro ao registrar: ' + error.message);
+      }
+    });
   });
 
   return (
@@ -93,6 +93,7 @@ export default function RegisterForm(): JSX.Element {
             <RiLockPasswordLine />
           </div>
           <input
+            type="password"
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  "
             {...register('password')}
           />
@@ -108,7 +109,7 @@ export default function RegisterForm(): JSX.Element {
         className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg w-full px-5 py-2.5 text-center "
         type="submit"
       >
-        {loading ? (
+        {isPending ? (
           <svg
             aria-hidden="true"
             className="w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"

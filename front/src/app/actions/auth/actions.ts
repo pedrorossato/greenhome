@@ -10,7 +10,7 @@ export async function signin(formData: FormData): Promise<void> {
   const email = formData.get('email')?.toString();
   const password = formData.get('password')?.toString();
 
-  if (!email || !password) throw new Error('');
+  if (!email || !password) throw new Error('Informe os campos obrigatórios.');
 
   const session = await fetcher<Session>(
     '/auth/authenticate',

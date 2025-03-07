@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { useState } from 'react';
+import { useTransition } from 'react';
 import { useForm } from 'react-hook-form';
 import { MdOutlineAlternateEmail } from 'react-icons/md';
 import { RiLockPasswordLine } from 'react-icons/ri';
@@ -9,23 +9,24 @@ import { toast } from 'react-toastify';
 
 import { Form } from '@/components/ui/form';
 
-import { signin } from '@/app/actions/auth/auth';
+import { signin } from '@/app/actions/auth/actions';
 
 export default function LoginForm(): JSX.Element {
+  const [isPending, startTransition] = useTransition();
+
   const form = useForm();
   const { register } = form;
-  const [loading, setLoading] = useState<boolean>(false);
 
   const handleAction = async (formData: FormData): Promise<void> => {
-    try {
-      setLoading(true);
-      await signin(formData);
-      toast.success('Login realizado com sucesso.');
-    } catch (error: any) {
-      toast.error('Erro ao fazer login: ' + error.message);
-    } finally {
-      setLoading(false);
-    }
+    if (isPending) return;
+    startTransition(async () => {
+      try {
+        await signin(formData);
+        toast.success('Login realizado com sucesso.');
+      } catch (error: any) {
+        toast.error('Erro ao fazer login: ' + error.message);
+      }
+    });
   };
 
   return (
@@ -56,6 +57,7 @@ export default function LoginForm(): JSX.Element {
               <RiLockPasswordLine />
             </div>
             <input
+              type="password"
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  "
               {...register('password')}
             />
@@ -71,7 +73,7 @@ export default function LoginForm(): JSX.Element {
           className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg w-full text-sm px-5 py-2.5 text-center"
           type="submit"
         >
-          {loading ? (
+          {isPending ? (
             <svg
               aria-hidden="true"
               className="w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"

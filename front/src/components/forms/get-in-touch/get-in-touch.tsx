@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useTransition } from 'react';
 import { useForm } from 'react-hook-form';
 import {
   MdOutlineAlternateEmail,
@@ -9,53 +9,36 @@ import {
 } from 'react-icons/md';
 import { toast } from 'react-toastify';
 
-interface FormData {
-  name: string;
-  email: string;
-  message: string;
-}
+import getInTouch from '@/app/actions/get-in-touch/actions';
 
 export default function GetInTouchForm(): JSX.Element {
-  const [loading, setLoading] = useState(false);
-  const { register, handleSubmit, setValue } = useForm<FormData>();
+  const [isPending, startTransition] = useTransition();
 
-  const onSubmit = handleSubmit(async (data) => {
-    setLoading(true);
-    const res = await fetch(process.env.NEXT_PUBLIC_API_URL + '/get-in-touch', {
-      method: 'POST',
-      body: JSON.stringify({
-        name: data?.name,
-        email: data?.email,
-        message: data?.message,
-      }),
-      headers: { 'Content-Type': 'application/json' },
+  const { register } = useForm();
+
+  const handleAction = async (data: FormData): Promise<void> => {
+    if (isPending) return;
+    startTransition(async () => {
+      try {
+        await getInTouch(data);
+        toast.success('Contato enviado!', {
+          position: 'top-right',
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: 'light',
+        });
+      } catch (error: any) {
+        toast.error('Erro ao fazer contato: ' + error.message);
+      }
     });
-
-    if (!res.ok) {
-      throw new Error(
-        'Não foi possível fazer contato. Aguarde e tente de novo.',
-      );
-    }
-
-    toast.success('Contato enviado!', {
-      position: 'top-right',
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: 'light',
-    });
-
-    setValue('email', '');
-    setValue('name', '');
-    setValue('message', '');
-    setLoading(false);
-  });
+  };
 
   return (
-    <form className="w-full md:w-1/2" onSubmit={onSubmit}>
+    <form className="w-full md:w-1/2" action={handleAction}>
       <h1 className="text-4xl text-center">Entre em contato</h1>
       <div className="mb-5">
         <label className="block mb-2 text-sm font-medium text-gray-900">
@@ -105,7 +88,7 @@ export default function GetInTouchForm(): JSX.Element {
         className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full px-5 py-2.5 text-center "
         type="submit"
       >
-        {loading ? (
+        {isPending ? (
           <svg
             aria-hidden="true"
             className="w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"

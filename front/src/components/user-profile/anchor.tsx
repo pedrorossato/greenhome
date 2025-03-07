@@ -1,6 +1,6 @@
 'use server';
 
-import { logout } from '@/app/actions/auth/auth';
+import { logout } from '@/app/actions/auth/actions';
 import { verifySession } from '@/app/lib/session';
 
 import RedirectButton from '../button/redirect-button';
