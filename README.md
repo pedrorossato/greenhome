@@ -9,8 +9,8 @@ O site possui uma interface amigável, com navegação intuitiva e design respon
 
 ### Tecnologias utilizadas
 
-- Frontend: ReactJS (Node 18)
-- Backend: Spring boot 3 (Java 17)
+- Frontend: NextJS 14
+- Backend: Spring boot 3 (Java 21)
 - Banco de dados: PostgreSQL (latest)
 
 ### Funcionalidades 
