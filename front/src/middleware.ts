@@ -2,11 +2,9 @@ import { cookies } from 'next/headers';
 import { type NextRequest, NextResponse } from 'next/server';
 
 import { decrypt } from '@/app/lib/session';
+import { publicRoutes, protectedRoutes } from '@/routes';
 
 import { type Session } from './types/user';
-
-const protectedRoutes = ['/admin', '/user'];
-const publicRoutes = ['/login', '/register', '/'];
 
 export default async function middleware(
   req: NextRequest,

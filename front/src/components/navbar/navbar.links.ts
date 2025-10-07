@@ -8,10 +8,6 @@ const NavbarLinks = [
     title: 'Empreendimentos',
   },
   {
-    id: '/blog',
-    title: 'Blog',
-  },
-  {
     id: '/contato',
     title: 'Contato',
   },

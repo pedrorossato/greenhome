@@ -13,143 +13,140 @@ import Intercom from '../../../../public/intercom.png';
 import PartyHall from '../../../../public/salao.png';
 import SplitACWaiting from '../../../../public/splitACWaiting.png';
 
+interface AmenityCardProps {
+  icon: any;
+  title: string;
+  description?: string;
+  alt: string;
+}
+
+function AmenityCard({ icon, title, description, alt }: AmenityCardProps) {
+  return (
+    <div className="bg-white/5 backdrop-blur-sm rounded-xl p-4 border border-white/10 hover:bg-white/10 transition-all duration-300 group">
+      <div className="flex flex-col items-center text-center">
+        <div className="bg-white/10 p-3 rounded-lg mb-3 group-hover:bg-white/20 transition-all duration-300">
+          <Image
+            width={48}
+            height={48}
+            alt={alt}
+            src={icon}
+            className="filter brightness-0 invert"
+          />
+        </div>
+        <h3 className="text-white font-semibold text-sm mb-1 group-hover:text-white/90 transition-colors">
+          {title}
+        </h3>
+        {description && (
+          <p className="text-gray-300 text-xs leading-relaxed group-hover:text-gray-200 transition-colors">
+            {description}
+          </p>
+        )}
+      </div>
+    </div>
+  );
+}
+
 export default function BuildingAmenities({
   building,
 }: {
   building: Building;
 }): JSX.Element {
+  const amenities = [
+    {
+      condition: building.centralGas,
+      icon: CentralGas,
+      title: 'Gás Central',
+      description: 'Com medidores individuais',
+      alt: 'Gás Central'
+    },
+    {
+      condition: building.elevator,
+      icon: Elevator,
+      title: 'Elevador',
+      description: 'Para maior comodidade',
+      alt: 'Elevador'
+    },
+    {
+      condition: building.entranceHall,
+      icon: EntranceHall,
+      title: 'Hall de Entrada',
+      description: 'Belo e seguro',
+      alt: 'Hall de Entrada'
+    },
+    {
+      condition: building.gym,
+      icon: Gym,
+      title: 'Academia',
+      description: 'Equipamentos modernos',
+      alt: 'Academia'
+    },
+    {
+      condition: building.eletronicGate,
+      icon: EletronicGate,
+      title: 'Portão Eletrônico',
+      description: 'Nas garagens',
+      alt: 'Portão Eletrônico'
+    },
+    {
+      condition: building.intercom,
+      icon: Intercom,
+      title: 'Interfones',
+      description: 'Sistema de comunicação',
+      alt: 'Interfones'
+    },
+    {
+      condition: building.splitACWaiting,
+      icon: SplitACWaiting,
+      title: 'Espera para A/C Split',
+      description: 'Preparado para ar condicionado',
+      alt: 'Espera para A/C Split'
+    },
+    {
+      condition: building.bicycleStand,
+      icon: BicycleStand,
+      title: 'Bicicletário',
+      description: 'Seguro e funcional',
+      alt: 'Bicicletário'
+    },
+    {
+      condition: building.partyHall,
+      icon: PartyHall,
+      title: 'Salão de Festas',
+      description: 'Espaço para eventos',
+      alt: 'Salão de Festas'
+    },
+    {
+      condition: building.playground,
+      icon: Playground,
+      title: 'Playground',
+      description: 'Área de lazer infantil',
+      alt: 'Playground'
+    }
+  ];
+
+  const availableAmenities = amenities.filter(amenity => amenity.condition);
+
+  if (availableAmenities.length === 0) {
+    return (
+      <div className="text-center py-8">
+        <p className="text-gray-300 text-lg">
+          Nenhuma amenidade disponível no momento.
+        </p>
+      </div>
+    );
+  }
+
   return (
-    <>
-      {building.centralGas ? (
-        <div className="flex">
-          <Image width={64} alt="cetralgas" src={CentralGas} />
-          <div>
-            <h2 className="text-2xl">Gás Central</h2>
-            <p>Com medidores individuais</p>
-          </div>
-        </div>
-      ) : (
-        <></>
-      )}
-      {building.elevator ? (
-        <div className="flex">
-          <Image className="mr-2" width={64} alt="elevator" src={Elevator} />
-          <div>
-            <h2 className="text-2xl">Elevador</h2>
-            <p>Para maior comodidade</p>
-          </div>
-        </div>
-      ) : (
-        <></>
-      )}
-      {building.entranceHall ? (
-        <div className="flex">
-          <Image
-            className="mr-2"
-            width={64}
-            alt="entranceHall"
-            src={EntranceHall}
-          />
-          <div>
-            <h2 className="text-2xl">Hall de entrada</h2>
-            <p>Belo e seguro</p>
-          </div>
-        </div>
-      ) : (
-        <></>
-      )}
-      {building.gym ? (
-        <div className="flex">
-          <Image className="mr-2" width={64} alt="gym" src={Gym} />
-          <div>
-            <h2 className="text-2xl">Academia</h2>
-          </div>
-        </div>
-      ) : (
-        <></>
-      )}
-      {building.eletronicGate ? (
-        <div className="flex">
-          <Image
-            className="mr-2"
-            width={64}
-            alt="eletronicGate"
-            src={EletronicGate}
-          />
-          <div>
-            <h2 className="text-2xl">Portão eletrônico</h2>
-            <p>Nas garagens</p>
-          </div>
-        </div>
-      ) : (
-        <></>
-      )}
-      {building.intercom ? (
-        <div className="flex">
-          <Image className="mr-2" width={64} alt="intercom" src={Intercom} />
-          <div>
-            <h2 className="text-2xl">Interfones</h2>
-          </div>
-        </div>
-      ) : (
-        <></>
-      )}
-      {building.splitACWaiting ? (
-        <div className="flex">
-          <Image
-            className="mr-2"
-            width={64}
-            alt="splitACWaiting"
-            src={SplitACWaiting}
-          />
-          <div>
-            <h2 className="text-2xl">Espera para A/C split</h2>
-          </div>
-        </div>
-      ) : (
-        <></>
-      )}
-      {building.bicycleStand ? (
-        <div className="flex">
-          <Image
-            className="mr-2"
-            width={64}
-            alt="bicycleStand"
-            src={BicycleStand}
-          />
-          <div>
-            <h2 className="text-2xl">Bicicletário</h2>
-            <p>Seguro e funcional</p>
-          </div>
-        </div>
-      ) : (
-        <></>
-      )}
-      {building.partyHall ? (
-        <div className="flex">
-          <Image className="mr-2" width={64} alt="partyHall" src={PartyHall} />
-          <div>
-            <h2 className="text-2xl">Salão de Festas</h2>
-          </div>
-        </div>
-      ) : (
-        <></>
-      )}
-      {building.playground ? (
-        <div className="flex">
-          <Image
-            className="mr-2"
-            width={64}
-            alt="Playground"
-            src={Playground}
-          />
-          <div>
-            <h2 className="text-2xl">Playground</h2>
-          </div>
-        </div>
-      ) : (
-        <></>
-      )}
-    </>
+    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7 gap-4">
+      {availableAmenities.map((amenity, index) => (
+        <AmenityCard
+          key={index}
+          icon={amenity.icon}
+          title={amenity.title}
+          description={amenity.description}
+          alt={amenity.alt}
+        />
+      ))}
+    </div>
   );
 }

@@ -5,6 +5,7 @@ import { ToastContainer } from 'react-toastify';
 
 import Footer from '@/components/footer/footer';
 import Navbar from '@/components/navbar/navbar';
+import WhatsAppButtonWrapper from '@/components/whatsapp-button/whatsapp-button-wrapper';
 import './globals.css';
 import 'react-toastify/dist/ReactToastify.css';
 import { UserProfile } from '@/components/user-profile';
@@ -34,6 +35,7 @@ export default async function RootLayout({
         <ToastContainer />
         {children}
         <Footer />
+        <WhatsAppButtonWrapper />
       </body>
     </html>
   );

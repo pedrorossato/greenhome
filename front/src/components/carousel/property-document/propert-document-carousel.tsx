@@ -21,21 +21,21 @@ export default function PropertyDocumentCarousel({
     return <p>Sem conteúdo</p>;
   }
   return (
-    <Carousel className="w-1/2">
+    <Carousel className="w-full">
       <CarouselContent>
         {documents.map((doc) => (
           <CarouselItem key={doc.documentUUID}>
-            <Card>
-              <CardContent>
+            <Card className="h-full">
+              <CardContent className="p-0">
                 <Dialog modal>
-                  <DialogTrigger>
+                  <DialogTrigger className="w-full">
                     <img
-                      className="object-cover"
+                      className="w-full h-96 object-cover rounded-lg"
                       alt={doc.id.toString()}
                       src={doc.url}
                     />
                   </DialogTrigger>
-                  <DialogContent className="w-full max-w-4xl p-0">
+                  <DialogContent className="w-full max-w-6xl p-0">
                     <img
                       className="w-full h-full object-contain"
                       alt={doc.id.toString()}
