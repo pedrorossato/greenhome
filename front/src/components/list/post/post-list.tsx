@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -18,17 +18,17 @@ export default function PostList({ initialPosts }: PostListProps): JSX.Element {
   const [offset, setOffset] = useState(NUMBER_OF_POSTS_TO_FETCH);
   const { ref, inView } = useInView();
 
-  async function loadMorePosts(): Promise<void> {
+  const loadMorePosts = useCallback(async (): Promise<void> => {
     const morePosts = await getPagedPosts(offset, NUMBER_OF_POSTS_TO_FETCH);
     setPosts([...posts, ...morePosts]);
     setOffset(offset + NUMBER_OF_POSTS_TO_FETCH);
-  }
+  }, [offset, posts]);
 
   useEffect(() => {
     if (inView) {
-      loadMorePosts();
+      void loadMorePosts();
     }
-  }, [inView]);
+  }, [inView, loadMorePosts]);
 
   if (!posts) return <></>;
   return (

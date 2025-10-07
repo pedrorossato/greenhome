@@ -1,12 +1,11 @@
 'use client';
 
 import { FaMapMarker } from 'react-icons/fa';
-import { GiCrane } from 'react-icons/gi';
 
+import GalleryModal from '@/components/gallery-modal/gallery-modal';
 import { PropertyMapsComponent } from '@/components/maps/property';
 import ApartmentTable from '@/components/table/apartment/apartment-table';
 import BuildingAmenities from '@/components/ui/building/property-amenities';
-import GalleryModal from '@/components/gallery-modal/gallery-modal';
 
 import { fetcher } from '@/services/fetcher';
 import type Apartment from '@/types/apartments/apartment';
@@ -113,12 +112,13 @@ export default async function PropertyPage({
       <div className="relative z-10 min-h-screen">
         <div className="container mx-auto px-4 py-12 pb-20">
           <div className="max-w-7xl mx-auto space-y-12">
-            
             <div className="text-center mb-12">
-              <span 
+              <span
                 className="inline-block px-4 py-2 rounded-full text-sm font-medium mb-4 backdrop-blur-sm border"
                 style={{
-                  backgroundColor: `${PropertyStatusColor.get(property.status)}20`,
+                  backgroundColor: `${PropertyStatusColor.get(
+                    property.status,
+                  )}20`,
                   color: PropertyStatusColor.get(property.status),
                   borderColor: `${PropertyStatusColor.get(property.status)}30`,
                 }}
@@ -131,9 +131,9 @@ export default async function PropertyPage({
               <p className="text-lg text-gray-200 max-w-4xl mx-auto leading-relaxed mb-8">
                 {property.description}
               </p>
-              
+
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <button 
+                <button
                   onClick={() => {
                     const message = `Olá! Gostaria de agendar uma visita para conhecer o empreendimento ${property.name}.`;
                     const encodedMessage = encodeURIComponent(message);
@@ -144,7 +144,7 @@ export default async function PropertyPage({
                 >
                   Agendar Visita
                 </button>
-                <button 
+                <button
                   onClick={() => {
                     const message = `Olá! Gostaria de receber mais informações sobre o empreendimento ${property.name}.`;
                     const encodedMessage = encodeURIComponent(message);
@@ -164,9 +164,13 @@ export default async function PropertyPage({
                   <div className="bg-primary-blue/20 p-3 rounded-xl mr-4 group-hover:bg-primary-blue/30 transition-colors">
                     <FaMapMarker className="text-primary-blue text-xl" />
                   </div>
-                  <h3 className="text-white font-semibold text-lg">Localização</h3>
+                  <h3 className="text-white font-semibold text-lg">
+                    Localização
+                  </h3>
                 </div>
-                <p className="text-gray-200 text-sm leading-relaxed">{property.address}</p>
+                <p className="text-gray-200 text-sm leading-relaxed">
+                  {property.address}
+                </p>
               </div>
 
               {minArea && maxArea && (
@@ -189,7 +193,9 @@ export default async function PropertyPage({
                     <div className="bg-purple-500/20 p-3 rounded-xl mr-4 group-hover:bg-purple-500/30 transition-colors">
                       <BedDouble className="text-purple-400 text-xl" />
                     </div>
-                    <h3 className="text-white font-semibold text-lg">Quartos</h3>
+                    <h3 className="text-white font-semibold text-lg">
+                      Quartos
+                    </h3>
                   </div>
                   <p className="text-gray-200 text-sm">
                     {minBedroomCount} a {maxBedroomCount} quartos
@@ -198,25 +204,27 @@ export default async function PropertyPage({
               )}
 
               {estimatedReleaseDate &&
-              property.status === PropertyStatus.CONSTRUCTION &&
-              estimatedReleaseDate.getTime() > new Date().getTime() && (
-                <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20 hover:bg-white/15 transition-all duration-300 group">
-                  <div className="flex items-center mb-4">
-                    <div className="bg-green-500/20 p-3 rounded-xl mr-4 group-hover:bg-green-500/30 transition-colors">
-                      <div className="w-5 h-5 bg-green-400 rounded-full"></div>
+                property.status === PropertyStatus.CONSTRUCTION &&
+                estimatedReleaseDate.getTime() > new Date().getTime() && (
+                  <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20 hover:bg-white/15 transition-all duration-300 group">
+                    <div className="flex items-center mb-4">
+                      <div className="bg-green-500/20 p-3 rounded-xl mr-4 group-hover:bg-green-500/30 transition-colors">
+                        <div className="w-5 h-5 bg-green-400 rounded-full"></div>
+                      </div>
+                      <h3 className="text-white font-semibold text-lg">
+                        Previsão
+                      </h3>
                     </div>
-                    <h3 className="text-white font-semibold text-lg">Previsão</h3>
+                    <p className="text-gray-200 text-sm">
+                      Entrega prevista para{' '}
+                      <span className="font-semibold text-green-300">
+                        {`${
+                          estimatedReleaseDate.getMonth() + 1
+                        }/${estimatedReleaseDate.getFullYear()}`}
+                      </span>
+                    </p>
                   </div>
-                  <p className="text-gray-200 text-sm">
-                    Entrega prevista para{' '}
-                    <span className="font-semibold text-green-300">
-                      {`${
-                        estimatedReleaseDate.getMonth() + 1
-                      }/${estimatedReleaseDate.getFullYear()}`}
-                    </span>
-                  </p>
-                </div>
-              )}
+                )}
             </div>
 
             {building && (
@@ -233,35 +241,40 @@ export default async function PropertyPage({
                 <h2 className="text-2xl md:text-3xl font-bold text-white mb-8 text-center">
                   Progresso da Obra
                 </h2>
-                
+
                 <div className="mb-8">
                   <div className="flex justify-between items-center mb-4">
-                    <h3 className="text-xl font-bold text-white">Progresso Geral</h3>
+                    <h3 className="text-xl font-bold text-white">
+                      Progresso Geral
+                    </h3>
                     <span className="text-2xl font-bold text-green-400">
                       {Math.round(
-                        ((building.landingProgress || 0) + 
-                         (building.foundationProgress || 0) + 
-                         (building.structureProgress || 0) + 
-                         (building.masonryProgress || 0) + 
-                         (building.eletricProgress || 0) + 
-                         (building.hydraulicProgress || 0) + 
-                         (building.finishingProgress || 0)) / 7
-                      )}%
+                        ((building.landingProgress ?? 0) +
+                          (building.foundationProgress ?? 0) +
+                          (building.structureProgress ?? 0) +
+                          (building.masonryProgress ?? 0) +
+                          (building.eletricProgress ?? 0) +
+                          (building.hydraulicProgress ?? 0) +
+                          (building.finishingProgress ?? 0)) /
+                          7,
+                      )}
+                      %
                     </span>
                   </div>
                   <div className="w-full bg-white/20 rounded-full h-6">
                     <div
                       className="bg-gradient-to-r from-green-500 via-blue-500 to-purple-600 h-6 rounded-full transition-all duration-1000 ease-out"
-                      style={{ 
+                      style={{
                         width: `${Math.round(
-                          ((building.landingProgress || 0) + 
-                           (building.foundationProgress || 0) + 
-                           (building.structureProgress || 0) + 
-                           (building.masonryProgress || 0) + 
-                           (building.eletricProgress || 0) + 
-                           (building.hydraulicProgress || 0) + 
-                           (building.finishingProgress || 0)) / 7
-                        )}%` 
+                          ((building.landingProgress ?? 0) +
+                            (building.foundationProgress ?? 0) +
+                            (building.structureProgress ?? 0) +
+                            (building.masonryProgress ?? 0) +
+                            (building.eletricProgress ?? 0) +
+                            (building.hydraulicProgress ?? 0) +
+                            (building.finishingProgress ?? 0)) /
+                            7,
+                        )}%`,
                       }}
                     ></div>
                   </div>
@@ -269,32 +282,48 @@ export default async function PropertyPage({
 
                 <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-4">
                   <div className="text-center">
-                    <div className="text-sm text-gray-300 mb-2">Terraplanagem</div>
-                    <div className="text-lg font-bold text-blue-400">{building.landingProgress}%</div>
+                    <div className="text-sm text-gray-300 mb-2">
+                      Terraplanagem
+                    </div>
+                    <div className="text-lg font-bold text-blue-400">
+                      {building.landingProgress}%
+                    </div>
                   </div>
                   <div className="text-center">
                     <div className="text-sm text-gray-300 mb-2">Fundação</div>
-                    <div className="text-lg font-bold text-blue-400">{building.foundationProgress}%</div>
+                    <div className="text-lg font-bold text-blue-400">
+                      {building.foundationProgress}%
+                    </div>
                   </div>
                   <div className="text-center">
                     <div className="text-sm text-gray-300 mb-2">Estrutura</div>
-                    <div className="text-lg font-bold text-blue-400">{building.structureProgress}%</div>
+                    <div className="text-lg font-bold text-blue-400">
+                      {building.structureProgress}%
+                    </div>
                   </div>
                   <div className="text-center">
                     <div className="text-sm text-gray-300 mb-2">Alvenaria</div>
-                    <div className="text-lg font-bold text-blue-400">{building.masonryProgress}%</div>
+                    <div className="text-lg font-bold text-blue-400">
+                      {building.masonryProgress}%
+                    </div>
                   </div>
                   <div className="text-center">
                     <div className="text-sm text-gray-300 mb-2">Elétrica</div>
-                    <div className="text-lg font-bold text-blue-400">{building.eletricProgress}%</div>
+                    <div className="text-lg font-bold text-blue-400">
+                      {building.eletricProgress}%
+                    </div>
                   </div>
                   <div className="text-center">
                     <div className="text-sm text-gray-300 mb-2">Hidráulica</div>
-                    <div className="text-lg font-bold text-blue-400">{building.hydraulicProgress}%</div>
+                    <div className="text-lg font-bold text-blue-400">
+                      {building.hydraulicProgress}%
+                    </div>
                   </div>
                   <div className="text-center">
                     <div className="text-sm text-gray-300 mb-2">Acabamento</div>
-                    <div className="text-lg font-bold text-blue-400">{building.finishingProgress}%</div>
+                    <div className="text-lg font-bold text-blue-400">
+                      {building.finishingProgress}%
+                    </div>
                   </div>
                 </div>
               </div>
@@ -322,15 +351,13 @@ export default async function PropertyPage({
               </div>
             )}
 
-            <GalleryModal 
+            <GalleryModal
               floorPlants={floorPlants}
               photos={photos}
               videos={videos}
             />
-
           </div>
         </div>
-        
       </div>
     </main>
   );

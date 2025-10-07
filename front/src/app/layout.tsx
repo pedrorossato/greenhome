@@ -5,10 +5,10 @@ import { ToastContainer } from 'react-toastify';
 
 import Footer from '@/components/footer/footer';
 import Navbar from '@/components/navbar/navbar';
+import { UserProfile } from '@/components/user-profile';
 import WhatsAppButtonWrapper from '@/components/whatsapp-button/whatsapp-button-wrapper';
 import './globals.css';
 import 'react-toastify/dist/ReactToastify.css';
-import { UserProfile } from '@/components/user-profile';
 
 const openSans = Open_Sans({
   weight: '400',

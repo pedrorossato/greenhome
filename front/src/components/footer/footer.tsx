@@ -64,8 +64,8 @@ export default async function Footer(): Promise<JSX.Element> {
               </p>
               <p className="text-xs text-gray-400">
                 Desenvolvido por{' '}
-                <a 
-                  href="https://www.linkedin.com/in/phvrossato/" 
+                <a
+                  href="https://www.linkedin.com/in/phvrossato/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="hover:text-blue-400 transition-colors duration-200"

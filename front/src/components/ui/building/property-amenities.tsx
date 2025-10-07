@@ -20,7 +20,12 @@ interface AmenityCardProps {
   alt: string;
 }
 
-function AmenityCard({ icon, title, description, alt }: AmenityCardProps) {
+function AmenityCard({
+  icon,
+  title,
+  description,
+  alt,
+}: AmenityCardProps): JSX.Element {
   return (
     <div className="bg-white/5 backdrop-blur-sm rounded-xl p-4 border border-white/10 hover:bg-white/10 transition-all duration-300 group">
       <div className="flex flex-col items-center text-center">
@@ -57,74 +62,74 @@ export default function BuildingAmenities({
       icon: CentralGas,
       title: 'Gás Central',
       description: 'Com medidores individuais',
-      alt: 'Gás Central'
+      alt: 'Gás Central',
     },
     {
       condition: building.elevator,
       icon: Elevator,
       title: 'Elevador',
       description: 'Para maior comodidade',
-      alt: 'Elevador'
+      alt: 'Elevador',
     },
     {
       condition: building.entranceHall,
       icon: EntranceHall,
       title: 'Hall de Entrada',
       description: 'Belo e seguro',
-      alt: 'Hall de Entrada'
+      alt: 'Hall de Entrada',
     },
     {
       condition: building.gym,
       icon: Gym,
       title: 'Academia',
       description: 'Equipamentos modernos',
-      alt: 'Academia'
+      alt: 'Academia',
     },
     {
       condition: building.eletronicGate,
       icon: EletronicGate,
       title: 'Portão Eletrônico',
       description: 'Nas garagens',
-      alt: 'Portão Eletrônico'
+      alt: 'Portão Eletrônico',
     },
     {
       condition: building.intercom,
       icon: Intercom,
       title: 'Interfones',
       description: 'Sistema de comunicação',
-      alt: 'Interfones'
+      alt: 'Interfones',
     },
     {
       condition: building.splitACWaiting,
       icon: SplitACWaiting,
       title: 'Espera para A/C Split',
       description: 'Preparado para ar condicionado',
-      alt: 'Espera para A/C Split'
+      alt: 'Espera para A/C Split',
     },
     {
       condition: building.bicycleStand,
       icon: BicycleStand,
       title: 'Bicicletário',
       description: 'Seguro e funcional',
-      alt: 'Bicicletário'
+      alt: 'Bicicletário',
     },
     {
       condition: building.partyHall,
       icon: PartyHall,
       title: 'Salão de Festas',
       description: 'Espaço para eventos',
-      alt: 'Salão de Festas'
+      alt: 'Salão de Festas',
     },
     {
       condition: building.playground,
       icon: Playground,
       title: 'Playground',
       description: 'Área de lazer infantil',
-      alt: 'Playground'
-    }
+      alt: 'Playground',
+    },
   ];
 
-  const availableAmenities = amenities.filter(amenity => amenity.condition);
+  const availableAmenities = amenities.filter((amenity) => amenity.condition);
 
   if (availableAmenities.length === 0) {
     return (

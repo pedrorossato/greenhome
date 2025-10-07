@@ -1,9 +1,9 @@
 'use client';
 
 import { useState } from 'react';
-import { X } from 'lucide-react';
-import PropertyDocumentCarousel from '@/components/carousel/property-document/propert-document-carousel';
+
 import { type PropertyDocument } from '@/types/properties/document/property-document';
+import { X } from 'lucide-react';
 
 interface GalleryModalProps {
   floorPlants: PropertyDocument[];
@@ -11,24 +11,28 @@ interface GalleryModalProps {
   videos: PropertyDocument[];
 }
 
-export default function GalleryModal({ floorPlants, photos, videos }: GalleryModalProps) {
+export default function GalleryModal({
+  floorPlants,
+  photos,
+  videos,
+}: GalleryModalProps): JSX.Element {
   const [modalOpen, setModalOpen] = useState(false);
   const [modalDocuments, setModalDocuments] = useState<PropertyDocument[]>([]);
   const [modalTitle, setModalTitle] = useState('');
 
-  const openModal = (docs: PropertyDocument[], title: string) => {
+  const openModal = (docs: PropertyDocument[], title: string): void => {
     setModalDocuments(docs);
     setModalTitle(title);
     setModalOpen(true);
   };
 
-  const closeModal = () => {
+  const closeModal = (): void => {
     setModalOpen(false);
     setModalDocuments([]);
     setModalTitle('');
   };
 
-  const openImageInNewTab = (doc: PropertyDocument) => {
+  const openImageInNewTab = (doc: PropertyDocument): void => {
     window.open(doc.url, '_blank');
   };
 
@@ -40,48 +44,68 @@ export default function GalleryModal({ floorPlants, photos, videos }: GalleryMod
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {floorPlants.length > 0 && (
-            <button 
-              onClick={() => openModal(floorPlants, 'Plantas Humanizadas')}
+            <button
+              onClick={() => {
+                openModal(floorPlants, 'Plantas Humanizadas');
+              }}
               className="bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white p-6 rounded-xl font-semibold transition-all duration-300 border border-white/30 hover:border-white/50 group"
             >
-              <div className="text-4xl mb-4 group-hover:scale-110 transition-transform">📐</div>
+              <div className="text-4xl mb-4 group-hover:scale-110 transition-transform">
+                📐
+              </div>
               <div className="text-lg font-bold mb-2">Plantas Humanizadas</div>
-              <div className="text-sm text-gray-300">{floorPlants.length} plantas disponíveis</div>
+              <div className="text-sm text-gray-300">
+                {floorPlants.length} plantas disponíveis
+              </div>
             </button>
           )}
-          
+
           {photos.length > 0 && (
-            <button 
-              onClick={() => openModal(photos, 'Galeria de Fotos')}
+            <button
+              onClick={() => {
+                openModal(photos, 'Galeria de Fotos');
+              }}
               className="bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white p-6 rounded-xl font-semibold transition-all duration-300 border border-white/30 hover:border-white/50 group"
             >
-              <div className="text-4xl mb-4 group-hover:scale-110 transition-transform">📸</div>
+              <div className="text-4xl mb-4 group-hover:scale-110 transition-transform">
+                📸
+              </div>
               <div className="text-lg font-bold mb-2">Galeria de Fotos</div>
-              <div className="text-sm text-gray-300">{photos.length} fotos disponíveis</div>
+              <div className="text-sm text-gray-300">
+                {photos.length} fotos disponíveis
+              </div>
             </button>
           )}
-          
+
           {videos.length > 0 && (
-            <button 
-              onClick={() => openModal(videos, 'Vídeos')}
+            <button
+              onClick={() => {
+                openModal(videos, 'Vídeos');
+              }}
               className="bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white p-6 rounded-xl font-semibold transition-all duration-300 border border-white/30 hover:border-white/50 group"
             >
-              <div className="text-4xl mb-4 group-hover:scale-110 transition-transform">🎥</div>
+              <div className="text-4xl mb-4 group-hover:scale-110 transition-transform">
+                🎥
+              </div>
               <div className="text-lg font-bold mb-2">Vídeos</div>
-              <div className="text-sm text-gray-300">{videos.length} vídeos disponíveis</div>
+              <div className="text-sm text-gray-300">
+                {videos.length} vídeos disponíveis
+              </div>
             </button>
           )}
         </div>
       </div>
 
-        {modalOpen && (
-          <div 
-            className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 pt-32 z-50"
-            onClick={closeModal}
-          >
-          <div 
+      {modalOpen && (
+        <div
+          className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 pt-32 z-50"
+          onClick={closeModal}
+        >
+          <div
             className="bg-white dark:bg-slate-800 rounded-2xl w-full max-w-7xl max-h-[calc(100vh-8rem)] flex flex-col overflow-hidden"
-            onClick={(e) => e.stopPropagation()}
+            onClick={(e) => {
+              e.stopPropagation();
+            }}
           >
             <div className="flex items-center justify-between p-6 border-b border-gray-200 dark:border-slate-700 flex-shrink-0">
               <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
@@ -94,14 +118,16 @@ export default function GalleryModal({ floorPlants, photos, videos }: GalleryMod
                 <X className="w-6 h-6 text-gray-500 dark:text-gray-400" />
               </button>
             </div>
-            
+
             <div className="flex-1 overflow-y-auto p-6">
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {modalDocuments.map((doc) => (
-                  <div 
-                    key={doc.documentUUID} 
+                  <div
+                    key={doc.documentUUID}
                     className="group cursor-pointer"
-                    onClick={() => openImageInNewTab(doc)}
+                    onClick={() => {
+                      openImageInNewTab(doc);
+                    }}
                   >
                     <div className="relative overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 group-hover:scale-105">
                       <img
@@ -125,7 +151,6 @@ export default function GalleryModal({ floorPlants, photos, videos }: GalleryMod
           </div>
         </div>
       )}
-
     </>
   );
 }
