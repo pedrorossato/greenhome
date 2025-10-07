@@ -6,7 +6,7 @@ import { publicRoutes } from '@/routes';
 
 import WhatsAppButton from './whatsapp-button';
 
-export default function WhatsAppButtonWrapper(): JSX.Element {
+export default function WhatsAppButtonWrapper(): JSX.Element | null {
   const pathname = usePathname();
 
   const isPublicRoute = publicRoutes.some((route) => {

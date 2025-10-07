@@ -23,6 +23,15 @@ interface FormFieldContextValue<
   name: TName;
 }
 
+interface FormFieldContextReturnValue {
+  id: string;
+  name: string;
+  formItemId: string;
+  formDescriptionId: string;
+  formMessageId: string;
+  error?: any;
+}
+
 const FormFieldContext = React.createContext<FormFieldContextValue | undefined>(
   undefined,
 );
@@ -40,7 +49,7 @@ const FormField = <
   );
 };
 
-const useFormField = (): FormFieldContextValue => {
+const useFormField = (): FormFieldContextReturnValue => {
   const fieldContext = React.useContext(FormFieldContext);
   const itemContext = React.useContext(FormItemContext);
   const { getFieldState, formState } = useFormContext();
