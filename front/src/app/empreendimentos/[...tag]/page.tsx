@@ -1,7 +1,7 @@
-'use client';
-
 import { FaMapMarker } from 'react-icons/fa';
 
+import AgendarVisitaButton from '@/components/button/whatsapp/agendar-visita-button';
+import MaisInformacoesButton from '@/components/button/whatsapp/mais-informacoes-button';
 import GalleryModal from '@/components/gallery-modal/gallery-modal';
 import { PropertyMapsComponent } from '@/components/maps/property';
 import ApartmentTable from '@/components/table/apartment/apartment-table';
@@ -133,28 +133,8 @@ export default async function PropertyPage({
               </p>
 
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <button
-                  onClick={() => {
-                    const message = `Olá! Gostaria de agendar uma visita para conhecer o empreendimento ${property.name}.`;
-                    const encodedMessage = encodeURIComponent(message);
-                    const whatsappUrl = `https://wa.me/5555999531120?text=${encodedMessage}`;
-                    window.open(whatsappUrl, '_blank');
-                  }}
-                  className="bg-primary-blue hover:bg-primary-blue/90 text-white px-8 py-4 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
-                >
-                  Agendar Visita
-                </button>
-                <button
-                  onClick={() => {
-                    const message = `Olá! Gostaria de receber mais informações sobre o empreendimento ${property.name}.`;
-                    const encodedMessage = encodeURIComponent(message);
-                    const whatsappUrl = `https://wa.me/5555999531120?text=${encodedMessage}`;
-                    window.open(whatsappUrl, '_blank');
-                  }}
-                  className="bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white px-8 py-4 rounded-xl font-semibold transition-all duration-300 border border-white/30 hover:border-white/50"
-                >
-                  Mais Informações
-                </button>
+                <AgendarVisitaButton propertyName={property.name} />
+                <MaisInformacoesButton propertyName={property.name} />
               </div>
             </div>
 
