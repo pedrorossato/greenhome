@@ -21,18 +21,19 @@ export default async function Home(): Promise<JSX.Element> {
   return (
     <main>
       <section
-        className="relative w-full flex flex-col justify-center items-center h-[calc(100vh-7rem)] overflow-hidden"
+        className="relative w-full flex flex-col justify-center items-center overflow-hidden"
         style={{
           backgroundImage: `url(${backgroundSM.src})`,
           backgroundSize: 'cover',
           backgroundRepeat: 'no-repeat',
           backgroundPosition: 'center',
+          minHeight: 'calc(100vh - 7rem)',
         }}
       >
         <div className="absolute inset-0 bg-gradient-to-br from-black/60 via-black/40 to-black/50"></div>
 
-        <div className="relative z-10 flex flex-col items-center justify-center space-y-8 px-4 text-center max-w-5xl mx-auto pb-20">
-          <div className="relative w-3/4 max-w-xs sm:max-w-sm md:max-w-md lg:max-w-xl animate-fade-in-up">
+        <div className="relative z-10 flex flex-col items-center justify-center space-y-4 sm:space-y-6 md:space-y-8 lg:space-y-10 px-4 text-center max-w-6xl mx-auto pt-8 pb-16 sm:pt-12 sm:pb-20 lg:pt-16 lg:pb-24">
+          <div className="relative w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl animate-fade-in-up">
             <div className="relative">
               <Image
                 src={Folder2}
@@ -44,8 +45,8 @@ export default async function Home(): Promise<JSX.Element> {
             </div>
           </div>
 
-          <div className="space-y-5 animate-fade-in-up animation-delay-300">
-            <h1 className="text-2xl md:text-3xl lg:text-4xl font-[playfair] text-white font-bold leading-tight drop-shadow-2xl bg-black/30 backdrop-blur-sm px-8 py-6 rounded-2xl mx-auto">
+          <div className="space-y-3 sm:space-y-4 md:space-y-6 lg:space-y-8 animate-fade-in-up animation-delay-300 w-full">
+            <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-[playfair] text-white font-bold leading-tight drop-shadow-2xl bg-black/30 backdrop-blur-sm px-4 sm:px-6 md:px-8 py-4 sm:py-6 rounded-2xl mx-auto max-w-4xl">
               Construindo{' '}
               <span className="text-primary-blue drop-shadow-lg">sonhos</span> e
               transformando{' '}
@@ -53,22 +54,17 @@ export default async function Home(): Promise<JSX.Element> {
                 realidades
               </span>
             </h1>
-            <p className="text-lg md:text-xl text-white max-w-2xl mx-auto leading-relaxed drop-shadow-lg bg-black/20 backdrop-blur-sm px-6 py-4 rounded-xl">
-              Construtora e incorporadora de Santa Maria, RS.
-              <br className="" />
-              Excelência em cada projeto, sustentabilidade em cada construção.
-            </p>
 
-            <div className="flex flex-col sm:flex-row gap-4 pt-4 animate-fade-in-up animation-delay-500 justify-center items-center">
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 lg:gap-6 pt-2 sm:pt-4 animate-fade-in-up animation-delay-500 justify-center items-center">
               <Link
                 href="/empreendimentos"
-                className="border-2 border-white/30 bg-gradient-to-r from-primary-blue to-secondary-blue text-white px-8 py-3 rounded-full font-semibold hover:shadow-lg hover:scale-105 transition-all duration-300 ease-in-out text-center"
+                className="w-full sm:w-auto border-2 border-white/30 bg-gradient-to-r from-primary-blue to-secondary-blue text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full font-semibold hover:shadow-lg hover:scale-105 transition-all duration-300 ease-in-out text-center text-sm sm:text-base lg:text-lg"
               >
                 Ver Empreendimentos
               </Link>
               <Link
                 href="/contato"
-                className="border-2 border-white/30 bg-gradient-to-r from-primary-green to-secondary-green text-white px-8 py-3 rounded-full font-semibold hover:shadow-lg hover:scale-105 transition-all duration-300 ease-in-out text-center"
+                className="w-full sm:w-auto border-2 border-white/30 bg-gradient-to-r from-primary-green to-secondary-green text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full font-semibold hover:shadow-lg hover:scale-105 transition-all duration-300 ease-in-out text-center text-sm sm:text-base lg:text-lg"
               >
                 Fale Conosco
               </Link>
@@ -76,15 +72,11 @@ export default async function Home(): Promise<JSX.Element> {
           </div>
         </div>
 
-        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-          <div className="bg-white/20 backdrop-blur-sm rounded-full p-3 hover:bg-white/30 transition-colors duration-300">
-            <ArrowDown className="text-white w-6 h-6" />
+        <div className="absolute bottom-6 sm:bottom-8 transform -translate-x-1/2 animate-bounce">
+          <div className="bg-white/20 backdrop-blur-sm rounded-full p-2 sm:p-3 hover:bg-white/30 transition-colors duration-300">
+            <ArrowDown className="text-white w-5 h-5 sm:w-6 sm:h-6" />
           </div>
         </div>
-
-        <div className="absolute top-20 left-10 w-20 h-20 bg-primary-blue/10 rounded-full blur-xl animate-pulse"></div>
-        <div className="absolute bottom-20 right-10 w-32 h-32 bg-primary-green/10 rounded-full blur-xl animate-pulse animation-delay-1000"></div>
-        <div className="absolute top-1/2 right-20 w-16 h-16 bg-orange-500/10 rounded-full blur-lg animate-pulse animation-delay-500"></div>
       </section>
       <section className="w-full py-20 bg-white">
         <div className="container">
